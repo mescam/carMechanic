@@ -1,13 +1,15 @@
 package com.sample
  
 import com.sample.DroolsTest.Message;
+import pl.poznan.put.fc.Question;
  
 rule "Hello World"
     when
         m : Message( status == Message.HELLO, myMessage : message )
     then
+    	(new Question("Moje piekne pytanie?")).askYesNo();
         System.out.println( myMessage );
-        m.setMessage( "Goodbye cruel world" );
+        m.setMessage( "Goodbye cruel world kurwo" );
         m.setStatus( Message.GOODBYE );
         update( m );
 end
