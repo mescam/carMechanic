@@ -7,7 +7,8 @@ rule "Hello World"
     when
         m : Message( status == Message.HELLO, myMessage : message )
     then
-    	(new Question("Moje piekne pytanie?")).askYesNo();
+    	Object[] answ = {"Tak", "Nie"};
+    	(new Question("Moje piekne pytanie?", answ)).ask();
         System.out.println( myMessage );
         m.setMessage( "Goodbye cruel world kurwo" );
         m.setStatus( Message.GOODBYE );

@@ -1,0 +1,42 @@
+//created on: 2015-01-09
+package pl.poznan.put.fc
+
+//list any import classes here.
+import pl.poznan.put.fc.Question;
+import pl.poznan.put.fc.Fact;
+
+
+//declare any global variables here
+
+
+
+
+rule "Rodzaj problemu"
+
+    when
+        //conditions
+    then
+        String[] answers = {"Układ kierowniczy", "Skrzynia biegów"};
+        String[] facts = {"problem_kierownica", "problem_biegi"};
+        Fact m = (new Question("Podaj rodzaj problemu", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+
+rule "Problem z kierownicą"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "problem_kierownica");
+    then
+        System.out.println("Wymień kierownicę");
+
+end
+
+rule "Problem z biegami"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "problem_biegi");
+    then
+        System.out.println("Zezłomuj samochód");
+
+end

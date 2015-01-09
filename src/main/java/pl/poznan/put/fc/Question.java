@@ -1,28 +1,26 @@
 package pl.poznan.put.fc;
 
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import pl.poznan.put.fc.Fact;
 
 public class Question {
 	private String question;
+	private Object[] answers;
+	private String[] facts;
 	
-	public Question(String question) {
+	public Question(String question, Object[] answers, String[] facts) {
 		this.question = question;
-		System.out.println(this.question);
+		this.answers = answers;
+		this.facts = facts;
 	}
 	
-	public void askYesNo() {
-		Object[] options = { "TAK", "NIE" };
+	public Fact ask() {
 		int ans = JOptionPane.showOptionDialog(null, question, "Car Mechanic Question", 
 				JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE,
-				null, options, options[0]);
-		if (ans == 0) {
-			return true;
-		} else {
-			return false; //to be done
-		}
+				null, answers, answers[0]);
+		return new Fact(facts[ans]);
 	}
 	
 	public void askInput() {
