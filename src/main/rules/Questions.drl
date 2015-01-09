@@ -28,9 +28,59 @@ rule "Problem z kierownicą"
     when
         Fact(fact == "problem_kierownica");
     then
-        System.out.println("Wymień kierownicę");
-
+        String[] answers = {"Tak", "Nie"};
+        String[] facts = {"utrudnione_kierowanie", "nie_utrudnione_kierowanie"};
+        Fact m = (new Question("Czy występuje utrudnienie w kierowaniu?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+        	
+        String[] facts2 = {"ciezki_powrot", "nie_ciezki_powrot"};
+        Fact m2 = (new Question("Czy występuje ciężki powrót kierownicy do pozycji centralnej?", answers, facts2)).ask();
+        if (m != null)
+        	insert(m);
 end
+
+rule "Czy luz w kierownicy"
+	when
+		Fact(fact == "Kierownica_A");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"luz", "nie_luz"};
+        Fact m = (new Question("Czy występuje luz podczas\nkręcenia kierownicą?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+
+
+/**
+REGULY POZNIEJ DO INNEGO PLIKU
+**/
+
+rule "Kierownica_A"
+	when
+		Fact(fact == "nie_utrudnione_kierowanie");
+	then
+		insert(new Fact("Kierownica_A"));
+end
+
+rule "Kierownica_L"
+	when
+		Fact(fact == "utrudnionie_kierowanie");
+		Fact(fact == "nie_ciezki_powrot");
+	then
+		insert(new Fact("Kierownica_L"));
+end
+
+rule "Kierownica_F"
+	when
+		Fact(fact == "utrudnionie_kierowanie");
+		Fact(fact == "ciezki_powrot");
+	then
+		insert(new Fact("Kierownica_F"));
+end
+
+
+
 
 rule "Problem z biegami"
     //include attributes such as "salience" here...
