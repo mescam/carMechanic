@@ -1,0 +1,17 @@
+Mysle ze poczatkowo bedzie wybór problemu z: Kierowaniem, Silnikiem, Skrzyni¹ biegów
+
+Czy wystêpuje utrudnienie w kierowaniu? Tak/Nie | if Problem_z_kierownic¹ 
+Czy wystêpuje ciê¿ki powrót kierownicy do pozycji centralnej? Tak/Nie | Od razu po pytaniu wy¿ej
+	Czy wystêpuje luz podczas krêcenia kierownic¹? Tak/Nie | if A
+		Czy wystêpuje ha³as ver 1? Tak/Nie | if B
+			Czy halas ver 1 jest sycz¹cy czy brzêcz¹cy? Syczy/Brzêczy | if C
+			Czy wystêpuj¹ wibracje oraz szarpanie? Tak/Nie | if D
+			W jakim stanie s¹ dr¹¿ki poprzeczne? Z³y/Dobry | if E | daje cel wymien lub dokrêæ
+	Wystêpuje ha³as czy szarpanie? Ha³as/Szarpanie | if F | daje cel wymieñ wa³ poœredni lub wymieñ pompê
+		Œci¹ga na bok czy ha³asuje ver 2? Œci¹ga/Ha³asuje | if G 
+			W jakim stanie s¹ opony? Nadmiernie zu¿yte/Normalnie od u¿ytku | if H| daje cel ustaw zbie¿noœæ lub J
+				Czy tarcze przednie s¹ pogiête? Tak/Nie | if J | daje cel wymien tacze lub przek³adnie kierownicza
+			Czy halas ver 2 jest sycz¹cy czy brzêcz¹cy? Syczy/Brzêczy | if I | daje cel wymien lub przytwierdz przewód elastyczny
+	Przy jakich prêdkoœciach wystepuje utrudnienie kierowania? Ma³e/Du¿e/Zawsze | if L | daje cel wymien pasek pompy/daje K/daje cel sprawdz obudowe kolumny kierowniczej
+		Czy p³yn uk³adu kierowniczego jest powy¿ej poziomu min? Tak/Nie | if K | daje cel wymien przek³adnie lub uzupe³nij p³yn
+

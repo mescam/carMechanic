@@ -1,0 +1,45 @@
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie then A
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak then A
+if utrudnienieKierowanie=Tak, ciezkiPowrot=Nie then L
+if utrudnienieKierowanie=Tak, ciezkiPowrot=Tak then F
+
+if A, luz=Tak then B
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Nie then G
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Nie then cel | Ustaw zbie¿noœæ kó³
+
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Tak, halas1=Tak then C
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Tak, halas1=Nie then D
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Tak, halas1=Nie then cel |wymieñ ³o¿yska kó³
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Tak, halas1=Tak then E
+
+if C, typHalas1=Syczacy than cel | docisnij wal posredni
+If C, typHalas1=Brzeczy than cel | wymien wal posredni
+
+if E, stanPoprzeczne=Dobry then cel | dokrec drazki poprzeczne
+if E, stanPoprzeczne=Z³y then cel | wymien drazko poprzeczne
+
+if D, szarpanieWibracje=Tak then cel | odpowietrz pompê
+if D, szarpanieWibracje=Nie then cel | wymien przekladnie
+
+if F, halasSzarpanie=Halas then cel | wymien wal posredni
+if F, halasSzarpanie=Szarpanie then cel | wymien pompe
+
+if G, halasNaBok=NaBok then H
+if G, halasNaBok=Halas then I
+
+if H, stanOpon=Starte then cel | ustaw zbie¿noœæ
+if H, stanOpon=Normalne then J
+
+if I, typHalas2=Syczy then cel | wymien przewód elastyczny
+if I, typHalas2=Brzeczy then cel | lepiej przytwierdz przewód elastyczny
+
+if J, stanHamulce=Pogiete then cel | wymien tarcze przednie
+if J, stanHamulce=Dobre then cel | wymien przek³adnie
+
+if L, jakaPredkosc=Mala then cel | Sprawdz pasek pompy
+if L, jakaPredkosc=Duza then K
+if L, jakaPredkosc=Zawsze then cel | Sprawdz obudowe kolumny kierowniczej
+
+if K, stanPlyn=Tak then cel | wymien pompe
+if K, stanPlyn=Nie then cel | dolej plyn
+

@@ -1,0 +1,21 @@
+Mysle ze poczatkowo bedzie wybór problemu z: Kierowaniem, Silnikiem, ZmianaBiegów
+
+Czy wystêpuje problem ze sprzêg³em? Tak/Nie | if ProblemZeZmianaBiegow 
+Czy s³yszysz ha³as? Tak/Nie | Od razu po pytaniu wy¿ej
+	S³yszysz klekot czy halas z ³o¿ysk? Klekot/HalasLozyska | if A | daje A1/cel wymien sprezyne
+		Czujesz poœlizg czy szarpanie sprzêg³a? Poœlizg/Szarpanie | if A1 | daje E/F
+			Dochodzi do wycieku oleju? Tak/Nie | if F | daje cel wymien tarcze sprzegla/kolo zamachowe
+			Czy ok³adziny tarczy sprzegla s¹ przegrzane? Tak/Nie | if E | daje cel zostaw ostygniecie, zmiana przyzwyczajen/daje E1
+				Pierœcien dociskowy jest odkszta³cony? Tak/Nie | if E1 | daje cel wymiana pierscienia dociskowego/tarcze sprzegla
+	Dochodzi do szarpania? Tak/Nie | if B | daje B1/B2
+		Dochodzi do poœlizgu? Tak/Nie | if B1 | daje cel wymien kolozamachowe/walek napedowy
+		Wystêpuje niepelne wylaczanie sprzegla czy potrzeba nadmiernej sily do wcisniecia przegla? Niepelne/Sila | if B2 | daje cel walek widelek/uklad sterowania
+	Kiedy s³yszysz ha³as? Neutralny,Wsteczny,wszystkie biegi | if C | daje C1,C2,C3
+		Czy ko³a zêbate s¹ zu¿yte? tak/nie |if C1| daje cel wymien ko³a/wymien ³o¿ysko wyciskowe sprzêg³a
+		Czy synchronizator 1 i 2 biegu jest zu¿yty? Tak/Nie | if C2| daje cel wymien synchronizator/kolo talerzowe
+		Czy jest poziom oleju jest prawid³owy? Tak Nie | if C3 | daje cel wymien zu¿yte lozyska/dolej olej
+	Czy bieg samoczynnie siê wy³¹cza? Tak/Nie | if D | daje cel wide³ki w³aczania biegu lub D2
+		Dochodzi do wycieku? Tak/Nie | if D2 | daje G i H
+			Dok¹d? Sprzeglo/SrodekSkrzyni | if G | daje cele wymien tuleje prowadzaca do lozyska wyciskowego/napraw obudowe skrzyni
+			Dochodzi do wibracji? Tak/Nie | if H| daje I/daje cel wymien przegub pó³osi
+				Czy ko³a s¹ wywa¿one? Tak/Nie | if I | daje cel wymien po³osie napedowe/wywaz kola 

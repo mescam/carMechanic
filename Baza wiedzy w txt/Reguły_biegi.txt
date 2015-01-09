@@ -1,0 +1,56 @@
+if czySprzeglo=Tak, czyHalas=Tak then A
+if czySprzeglo=Tak, czyHalas=Nie then B
+if czySprzeglo=Nie, czyHalas=Tak then C
+if czySprzeglo=Nie, czyHalas=Nie then D
+
+if A, typHalas=Klekot then A1
+if A, typHalas=Lozysko then cel | wymien sprê¿ynê powrotu
+
+if A1, poslizgSzarpanie= Poslizg then E
+if A1, poslizgSzarpanie= Szarpanie then F
+
+if E, okladziny=Tak then cel | zostaw do ostygniecia, zmien zachowanie kierowcy
+if E, okladziny=Nie then E1
+
+if E1, pierœcien=Tak then cel | wymien piercien dociskowy
+if E1, pierœcien=Nie then cel | wymien tarcze sprzegla
+
+if F, wyciek=Tak then cel | wymien tarcze sprzegla
+if F, wyciek=Nie then cel | wymien kolo zamachowe
+
+if B, szarpanie=Tak then B1
+if B, szarpanie=Nie then B2
+
+if B1, poslizg=Tak then cel | wymien kolo zamachowe
+if B1, poslizg=Nie then cel | wymien walek napedowy
+
+if B2, niepelneSila=Niepelne then cel | wymontowac, nasmarowac, zamontowac walek widelek
+if B2, niepelneSila=Sila then cel | przesmaruj uklad sterowania
+
+if C, kiedy=Neutral then C1
+if C, kiedy=Wsteczny then C2
+if C, kiedy=WszystkieBiegi then C3
+
+if C1 kola=Tak then cel | wymien kolazebate
+if C1 kola=Nie then cel | lozysko wyciskoew sprzegla
+
+if C2 synchro=Tak then cel | wymien synchronizator
+if C2 synchro=Nie then cel | kolo talerzowe
+
+if C3 olej=Tak then cel | zuzyte lozyska
+if C3 olej=Nie then cel | dolej olej
+
+if D, samoczynn=Tak then cel
+if D, samoczynne=nie then d2
+
+if d2, olej2 tak then g
+if d2, olej2 nie then h
+
+if g, dokad sprzegla then cel
+if g, dokad skrzynia then cel
+
+if h, wibracje2 tak then I
+if h, wibracje2 nie then cel
+
+if I, wywaz tak then cel
+if I, wywaz nie then cel
