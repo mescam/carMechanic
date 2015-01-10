@@ -252,18 +252,18 @@ rule "Biegi cel sprezyna powrotu"
         insert(new Fact("cel_wymien sprezyne"));
 end	
 	
-rule "Sprzeglo poslizg"
+rule "Biegi_E"
 	when
         Fact(fact == "Biegi_A1");
-        Fact(fact == "poslizg");
+        Fact(fact == "poslizg_sprzeglo");
     then
 		insert(new Fact("Biegi_E"));
 end
 
-rule "Sprzeglo szarpanie"
+rule "Biegi_F"
 	when
         Fact(fact == "Biegi_A1");
-        Fact(fact == "szarpanie");
+        Fact(fact == "szarpanie_sprzeglo");
     then
 		insert(new Fact("Biegi_F"));
 end
@@ -325,15 +325,15 @@ end
 rule "Biegi_B1"
 	when
         Fact(fact == "Biegi_B");
-        Fact(fact == "poslizg_sprzeglo");
+        Fact(fact == "szarpanie_sprzeglo");
     then
-        Finsert(new Fact("Biegi_B1"));
+        insert(new Fact("Biegi_B1"));
 end	
 
 rule "Biegi_B2"
 	when
         Fact(fact == "Biegi_B");
-        Fact(fact == "nie_poslizg_sprzeglo");
+        Fact(fact == "nie_szarpanie_sprzeglo");
     then
         insert(new Fact("Biegi_B2"));
 end	
@@ -474,7 +474,7 @@ rule "Biegi_G"
     //include attributes such as "salience" here...
     when
         Fact(fact == "Biegi_D1");
-        Fact(fact == "poziom_oleju_biegi");
+        Fact(fact == "wyciek_oleju_biegi");
     then
         insert(new Fact("Biegi_G"));
 end		
@@ -483,7 +483,7 @@ rule "Biegi_H"
     //include attributes such as "salience" here...
     when
         Fact(fact == "Biegi_D1");
-        Fact(fact == "nie_poziom_oleju_biegi");
+        Fact(fact == "nie_wyciek_oleju_biegi");
     then
         insert(new Fact("Biegi_H"));
 end	
