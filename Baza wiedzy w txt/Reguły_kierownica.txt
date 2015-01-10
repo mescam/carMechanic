@@ -1,40 +1,40 @@
-if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie then A
-if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak then A
-if utrudnienieKierowanie=Tak, ciezkiPowrot=Nie then L
-if utrudnienieKierowanie=Tak, ciezkiPowrot=Tak then F
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie then A - v
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak then A v
+if utrudnienieKierowanie=Tak, ciezkiPowrot=Nie then L v
+if utrudnienieKierowanie=Tak, ciezkiPowrot=Tak then F v
 
-if A, luz=Tak then B
-if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Nie then G
-if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Nie then cel | Ustaw zbie¿noœæ kó³
+if A, luz=Tak then B v
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Nie then G v
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Nie then cel | Ustaw zbieï¿½noï¿½ï¿½ kï¿½ v
 
-if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Tak, halas1=Tak then C
-if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Tak, halas1=Nie then D
-if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Tak, halas1=Nie then cel |wymieñ ³o¿yska kó³
-if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Tak, halas1=Tak then E
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Tak, halas1=Tak then C v
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Tak, halas1=Nie then D v
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Tak, halas1=Nie then cel |wymieï¿½ ï¿½oï¿½yska kï¿½ v
+if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Tak, halas1=Tak then E v
 
-if C, typHalas1=Syczacy than cel | docisnij wal posredni
-If C, typHalas1=Brzeczy than cel | wymien wal posredni
+if C, typHalas1=Syczacy than cel | docisnij wal posredni v
+If C, typHalas1=Brzeczy than cel | wymien wal posredni v
 
-if E, stanPoprzeczne=Dobry then cel | dokrec drazki poprzeczne
-if E, stanPoprzeczne=Z³y then cel | wymien drazko poprzeczne
+if E, stanPoprzeczne=Dobry then cel | dokrec drazki poprzeczne v 
+if E, stanPoprzeczne=Zï¿½y then cel | wymien drazko poprzeczne v
 
-if D, szarpanieWibracje=Tak then cel | odpowietrz pompê
-if D, szarpanieWibracje=Nie then cel | wymien przekladnie
+if D, szarpanieWibracje=Tak then cel | odpowietrz pompï¿½  v 
+if D, szarpanieWibracje=Nie then cel | wymien przekladnie  v
 
-if F, halasSzarpanie=Halas then cel | wymien wal posredni
-if F, halasSzarpanie=Szarpanie then cel | wymien pompe
-
+if F, halasSzarpanie=Halas then cel | wymien wal posredni  v
+if F, halasSzarpanie=Szarpanie then cel | wymien pompe  v
+ 
 if G, halasNaBok=NaBok then H
 if G, halasNaBok=Halas then I
 
-if H, stanOpon=Starte then cel | ustaw zbie¿noœæ
+if H, stanOpon=Starte then cel | ustaw zbieï¿½noï¿½ï¿½
 if H, stanOpon=Normalne then J
 
-if I, typHalas2=Syczy then cel | wymien przewód elastyczny
-if I, typHalas2=Brzeczy then cel | lepiej przytwierdz przewód elastyczny
+if I, typHalas2=Syczy then cel | wymien przewï¿½d elastyczny
+if I, typHalas2=Brzeczy then cel | lepiej przytwierdz przewï¿½d elastyczny
 
 if J, stanHamulce=Pogiete then cel | wymien tarcze przednie
-if J, stanHamulce=Dobre then cel | wymien przek³adnie
+if J, stanHamulce=Dobre then cel | wymien przekï¿½adnie
 
 if L, jakaPredkosc=Mala then cel | Sprawdz pasek pompy
 if L, jakaPredkosc=Duza then K
