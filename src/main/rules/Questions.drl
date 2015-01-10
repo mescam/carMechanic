@@ -4,11 +4,7 @@ package pl.poznan.put.fc
 //list any import classes here.
 import pl.poznan.put.fc.Question;
 import pl.poznan.put.fc.Fact;
-
-
-//declare any global variables here
-
-
+import pl.poznan.put.fc.Answer;
 
 
 rule "Rodzaj problemu"
@@ -173,277 +169,281 @@ rule "Stan plynu ukladu"
         	insert(m);
 end
 
-/**
-REGULY POZNIEJ DO INNEGO PLIKU
-**/
-
-rule "Kierownica_A"
+// Odpowiedzi
+rule "Cel Dolej plyn"
 	when
-		Fact(fact == "nie_utrudnione_kierowanie");
+		Fact(fact == "cel_dolej_plyn")
 	then
-		insert(new Fact("Kierownica_A"));
+		String a = "Należy dolać płynu do układu kierowniczego.\n" +
+		"Poruszanie się pojazdem bez odpowiedniego poziomu płynu w układzie\nmoże doprowadzić do trwałego uszkodzenia układu kierowniczego";
+		new Answer(a);
 end
 
-rule "Kierownica_L"
+rule "Cel Wymien pompe kier"
 	when
-		Fact(fact == "utrudnionie_kierowanie");
-		Fact(fact == "nie_ciezki_powrot");
+		Fact(fact == "cel_wymien_pompe")
 	then
-		insert(new Fact("Kierownica_L"));
+		String a = "Należy wymienić pompę wspomagania układu kierowniczego.\n" +
+		"Pompa jest głównym elementem układu wspomagania, który zmniejsza opór z jakim obraca się kierownica.\n" +
+		"Niedziałąjąca pompa skutkuje brakiem wspomagania, przez co skręt kół jest wykonywany w całości przy pomocy siły mięśni kierującego";
+		new Answer(a);
 end
 
-rule "Kierownica_F"
+rule "Cel obudowa kolumny"
 	when
-		Fact(fact == "utrudnionie_kierowanie");
-		Fact(fact == "ciezki_powrot");
+		Fact(fact == "cel_obudowa_kolumny")
 	then
-		insert(new Fact("Kierownica_F"));
-end
-
-rule "Kierownica_B"
-	when
-		Fact(fact == "luz");
-		Fact(fact == "Kierownica_A");
-	then
-		insert(new Fact("Kierownica_B"));
-end
-
-// if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Nie then G
-rule "Kierownica_G"
-	when
-		Fact(fact == "nie_luz");
-		Fact(fact == "nie_ciezki_powrot");
-		Fact(fact == "nie_utrudnione_kierowanie");
-	then
-		insert(new Fact("Kierownica_G"));
-end
-
-rule "Kierownica_Cel_Zbieznosc"
-	when
-		Fact(fact == "nie_luz");
-		Fact(fact == "ciezki_powrot");
-		Fact(fact == "nie_utrudnione_kierowanie");
-	then
-		insert(new Fact("cel_zbieznosc"));
-end
-
-//if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Tak, halas1=Tak then C
-rule "Kierownica_C"
-	when
-		Fact(fact == "luz");
-		Fact(fact == "nie_ciezki_powrot");
-		Fact(fact == "nie_utrudnione_kierowanie");
-		Fact(fact == "halas1");
-	then
-		insert(new Fact("Kierownica_C"));
-end
-
-//if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Tak, halas1=Nie then D
-rule "Kierownica_D"
-	when
-		Fact(fact == "nie_utrudnione_kierowanie");
-		Fact(fact == "nie_ciezki_powrot");
-		Fact(fact == "nie_luz");
-		Fact(fact == "nie_halas1");
-	then
-		insert(new Fact("Kierownica_D"));
-end
-
-// if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Tak, halas1=Nie then cel |wymien lozyska kol
-rule "Kierownica Cel Lozyska"
-	when
-		Fact(fact == "nie_utrudnione_kierowanie");
-		Fact(fact == "ciezki_powrot");
-		Fact(fact == "luz");
-		Fact(fact == "nie_halas1");
-	then
-		insert(new Fact("cel_lozyska"));
-end
-
-// if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Tak, halas1=Tak then E
-rule "Kierownica_E"
-	when
-		Fact(fact == "nie_utrudnione_kierowanie");
-		Fact(fact == "ciezki_powrot");
-		Fact(fact == "luz");
-		Fact(fact == "halas1");
-	then
-		insert(new Fact("Kierownica_E"));
-end
-
-//if C, typHalas1=Syczacy than cel | docisnij wal posredni
-rule "Kierownica Cel Wal1"
-	when
-		Fact(fact == "Kierownica_C");
-		Fact(fact == "halas1_syczy");
-	then
-		insert(new Fact("cel_docisnij_wal"));
-end
-//If C, typHalas1=Brzeczy than cel | wymien wal posredni
-rule "Kierownica Cel Wal2"
-	when
-		Fact(fact == "Kierownica_C");
-		Fact(fact == "halas1_brzeczy");
-	then
-		insert(new Fact("cel_wymien_wal"));
-end
-//if E, stanPoprzeczne=Dobry then cel | dokrec drazki poprzeczne
-rule "Kierownica Cel Drazki1"
-	when
-		Fact(fact == "Kierownica_E");
-		Fact(fact == "poprzeczne_dobry");
-	then
-		insert(new Fact("cel_dokrec_poprzeczne"));
-end
-//if E, stanPoprzeczne=Zly then cel | wymien drazko poprzeczne
-rule "Kierownica Cel Drazki2"
-	when
-		Fact(fact == "Kierownica_E");
-		Fact(fact == "poprzeczne_zly");
-	then
-		insert(new Fact("cel_wymien_poprzeczne"));
-end
-
-//if D, szarpanieWibracje=Tak then cel | odpowietrz pompe
-rule "Kierownica Cel Odpowietrz"
-	when
-		Fact(fact == "Kierownica_D");
-		Fact(fact == "wibracje_szarpanie");
-	then
-		insert(new Fact("cel_odpowietrz_pompe"));
-end
-//if D, szarpanieWibracje=Nie then cel | wymien przekladnie
-rule "Kierownica Cel Wymien Przekladnie"
-	when
-		Fact(fact == "Kierownica_D");
-		Fact(fact == "nie_wibracje_szarpanie");
-	then
-		insert(new Fact("cel_wymien_przekladnie"));
-end
-//if F, halasSzarpanie=Halas then cel | wymien wal posredni
-rule "Kierownica Cel Wymien Wal"
-	when
-		Fact(fact == "Kierownica_F");
-		Fact(fact == "halas2");
-	then
-		insert(new Fact("cel_wymien_wal"));
-end
-//if F, halasSzarpanie=Szarpanie then cel | wymien pompe
-rule "Kierownica Cel Wymien pompe"
-	when
-		Fact(fact == "Kierownica_F");
-		Fact(fact == "szarpanie");
-	then
-		insert(new Fact("cel_wymien_pompe"));
+		String a = "Należy sprawdzić obudowę kolumny kierowniczej\n" +
+		"Obudowa kolumny znajduje się wewnątrz pojazdu, przez nią łączona jest kierownica z układem kierowania\n" +
+		"Prawdopodobna usterka obudowy skutkuje problemami z układem kierowniczym";
+		new Answer(a);
 end
 
 
-//if G, halasNaBok=NaBok then H
-rule "Kierownica_H"
+rule "Cel pasek pompy"
 	when
-		Fact(fact == "Kierownica_G");
-		Fact(fact == "sciaga");
+		Fact(fact == "cel_pasek_pompy")
 	then
-		insert(new Fact("Kierownica_H"));
-end
-//if G, halasNaBok=Halas then I
-rule "Kierownica_I"
-	when
-		Fact(fact == "Kierownica_G");
-		Fact(fact == "halas3");
-	then
-		insert(new Fact("Kierownica_I"));
-end
-//if H, stanOpon=Starte then cel | ustaw zbie�no��
-rule "Kierownica Cel Zbieznosc"
-	when
-		Fact(fact == "Kierownica_H");
-		Fact(fact == "opony_zuzyte");
-	then
-		insert(new Fact("cel_ustaw_zbieznosc"));
-end
-//if H, stanOpon=Normalne then J
-rule "Kierownica_J"
-	when
-		Fact(fact == "Kierownica_H");
-		Fact(fact == "opony_normalne");
-	then
-		insert(new Fact("Kierownica_J"));
+		String a = "Należy sprawdzić pasek pompy wspomagania układu kierowniczego\n" +
+		"Pasek jest odpowiedzialny za dostarczanie energii z silnika\n" +
+		"Prawdopodobna usterka paska skutkuje problemami z układem kierowniczym";
+		new Answer(a);
 end
 
-//if I, typHalas2=Syczy then cel | wymien przew�d elastyczny
-rule "Kierownica Cel Wymien przewod"
+rule "Cel wymien przekladnie"
 	when
-		Fact(fact == "Kierownica_I");
-		Fact(fact == "halas3_syczy");
+		Fact(fact == "cel_wymien_przekladnie")
 	then
-		insert(new Fact("cel_wymien_przewod_elastyczny"));
-end
-//if I, typHalas2=Brzeczy then cel | lepiej przytwierdz przewod elastyczny
-rule "Kierownica Cel Przytwierdz Przewod"
-	when
-		Fact(fact == "Kierownica_I");
-		Fact(fact == "halas3_brzeczy");
-	then
-		insert(new Fact("cel_przytwierdz_przewod_elastyczny"));
-end
-//if J, stanHamulce=Pogiete then cel | wymien tarcze przednie
-rule "Kierownica Cel Wymien Tarcze"
-	when
-		Fact(fact == "Kierownica_J");
-		Fact(fact == "tarcze_pogiete");
-	then
-		insert(new Fact("cel_wymien_tarcze_przednie"));
-end
-//if J, stanHamulce=Dobre then cel | wymien przekladnie
-rule "Kierownica Cel Wymien Przekladnie2"
-	when
-		Fact(fact == "Kierownica_H");
-		Fact(fact == "tarcze_ok");
-	then
-		insert(new Fact("cel_wymien_przekladnie"));
-end
-//if L, jakaPredkosc=Mala then cel | Sprawdz pasek pompy
-rule "Kierownica Cel Sprawdz Pasek Pompy"
-	when
-		Fact(fact == "Kierownica_L");
-		Fact(fact == "predkosc_mala");
-	then
-		insert(new Fact("cel_pasek_pompy"));
-end
-//if L, jakaPredkosc=Duza then K
-rule "Kierownica_K"
-	when
-		Fact(fact == "Kierownica_L");
-		Fact(fact == "predkosc_duza");
-	then
-		insert(new Fact("Kierownica_K"));
-end
-//if L, jakaPredkosc=Zawsze then cel | Sprawdz obudowe kolumny kierowniczej
-rule "Kierownica Cel Kolumna"
-	when
-		Fact(fact == "Kierownica_L");
-		Fact(fact == "predkosc_zawsze");
-	then
-		insert(new Fact("cel_obudwa_kolumny"));
-end
-//if K, stanPlyn=Tak then cel | wymien pompe
-rule "Kierownica Cel Wymien pompe2"
-	when
-		Fact(fact == "Kierownica_K");
-		Fact(fact == "plyn_ok");
-	then
-		insert(new Fact("cel_wymien_pompe"));
-end
-//if K, stanPlyn=Nie then cel | dolej plyn
-rule "Kierownica Cel Dolej plyn"
-	when
-		Fact(fact == "Kierownica_K");
-		Fact(fact == "plyn_nieok");
-	then
-		insert(new Fact("cel_dolej_plyn"));
+		String a = "Należy wymienić przekładnie kierowniczą\n" +
+		"Przekładnia kierownicza służy do przełożenia siły rąk na siłę osiową skręcającą kołami\n" +
+		"Poruszanie się z niesprawną przekładnią jest bardzo niebezpieczne!";
+		new Answer(a);
 end
 
+rule "Cel wymien tarcze przednie"
+	when
+		Fact(fact == "cel_wymien_tarcze_przednie")
+	then
+		String a = "Należy wymienić przednie tarcze hamulca\n" +
+		"Tarcze hamulca są odpowiedzialne za zwiększenie siły tarcia i przejęcie energii kół podczas hamowania\n" +
+		"Poruszanie się z niesprawnymi tarczami hamulców jest bardzo niebezpieczne!";
+		new Answer(a);
+end
 
+rule "Cel przytwierdz przewod elastyczny"
+	when
+		Fact(fact == "cel_przytwierdz_przewod_elastyczny")
+	then
+		String a = "Należy przytwierdzić przewód elastyczny\n" +
+		"Przewód elastyczny łączy\n" +
+		"Prawdopodobna usterka skutkuje problemami z układem kierowniczym";
+		new Answer(a);
+end
+/***
+biegi
+***/
+rule "Problem z biegami"
 
+	when
+		Fact(fact == "problem_biegi");
+    then
+        String[] answers = {"Tak", "Nie"};
+        String[] facts = {"problem_sprzeglo", "nie_problem_sprzeglo"};
+        Fact m = (new Question("Czy występuje problem ze sprzęgłem?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+        	
+        String[] facts2 = {"halas_biegi", "nie_halas_biegi"};
+        Fact m2 = (new Question("Czy słyszysz hałas?", answers, facts2)).ask();
+        if (m2 != null)
+        	insert(m2);
+end
 
+rule "Typ halasu sprzegla"
+	when
+			Fact(fact == "Biegi_A");
+	then
+		String[] answers = {"Klekot", "Hałas z łożyska"};
+        String[] facts = {"klekot_sprzeglo", "halas_lozysko"};
+        Fact m = (new Question("Jakiego rodzaju hałas słyszysz? Klekotanie czy specyficzny hałas łożyska", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+	
+rule "Szarpanie lub poslizg sprzegla"
+	when
+			Fact(fact == "Biegi_A1");
+	then
+		String[] answers = {"Poślizg", "Szarpanie"};
+        String[] facts = {"poslizg_sprzeglo", "szarpanie_sprzeglo"};
+        Fact m = (new Question("Z klekotaniem wiąże się pośliz sprzęgła albo szarpanie. Czy które z nich występuje", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end	
+	
+rule "Czy wyciek oleju 1"
+	when
+			Fact(fact == "Biegi_F");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"wyciek_oleju_sprzeglo", "nie_wyciek_oleju_sprzeglo"};
+        Fact m = (new Question("Z szarpaniem sprzęgła czasami wiąże się z wyciekiem oleju. Czy zauważyłeś może wyciek oleju?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end	
+
+rule "Czy przegrzanie okladzin tarczy sprzegla"
+	when
+			Fact(fact == "Biegi_E");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"przegrzanie", "nie_przegrzanie"};
+			Fact m = (new Question("Poślizg może wiązać sie z przegrzaniem okładzin. Czy okładziny tarczy sprzegła są przegrzane?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy pierscien dociskowy odksztalcony"
+	when
+			Fact(fact == "Biegi_E1");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"pierscien_odksztalcony", "nie_pierscien_odksztalcony"};
+			Fact m = (new Question("Jeśli nie przegrzanie okładzin to może uszkodzenie pierścienia dociskowego. Czy pierścień dociskowy jest odkształcony?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy szarpanie sprzeglo"
+	when
+			Fact(fact == "Biegi_B");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"szarpanie_sprzeglo", "nie_szarpanie_sprzeglo"};
+			Fact m = (new Question("Czy wyczuwasz szarpaniem gdy dusisz sprzęgło?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Poslizg sprzeglo"
+	when
+			Fact(fact == "Biegi_B1");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"poslizg_sprzeglo", "nie_poslizg_sprzeglo"};
+			Fact m = (new Question("Czy wyczuwasz oprócz szarpanie, również poślizg sprzęgła?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Niepelna czy nadmierna"
+	when
+			Fact(fact == "Biegi_B2");
+	then
+			String[] answers = {"Niepełne wyłączanie", "Nadmierna siła"};
+			String[] facts = {"niepelne", "nadmierna"};
+			Fact m = (new Question("Jeśli nie szarpanie to musi dochodzić do niepełnego wyłączania sprzęgła lub potrzebna jest nadmierna siła, aby wciśnąć do końca sprzęgło?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Na jakim biegu?"
+	when
+			Fact(fact == "Biegi_C");
+	then
+			String[] answers = {"Na luzie", "Na wstecznym", "Na każdym biegu"};
+			String[] facts = {"biegi_neutralny", "biegi_wsteczny", "biegi_wszystkie"};
+			Fact m = (new Question("Na jakim rodzaju biegu dochodzi do problemu?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy kola zebate zuzyte"
+	when
+			Fact(fact == "Biegi_C1");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"zebate_zuzyte", "nie_zebate_zuzyte"};
+			Fact m = (new Question("Czy jakiekolwiek koło zębate jest zużyte?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy synchronizatoe zuzyty"
+	when
+			Fact(fact == "Biegi_C2");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"synchro_zuzyte", "nie_synchro_zuzyte"};
+			Fact m = (new Question("Czy widzisz ślady zużycia synchronizatora 1 i 2 biegu?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy poziom olej"
+	when
+			Fact(fact == "Biegi_C3");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"poziom_olej_biegi", "nie_poziom_olej_biegi"};
+			Fact m = (new Question("Czy poziom oleju jest prawidłowy?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy samoczynne wylaczenie"
+	when
+			Fact(fact == "Biegi_D");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"samoczynne", "nie_samoczynne"};
+			Fact m = (new Question("Czy biegi samoczynnie się wyłączają?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy wyciek oleju 2"
+	when
+			Fact(fact == "Biegi_D1");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"wyciek_oleju_biegi", "nie_wyciek_oleju_biegi"};
+        Fact m = (new Question("Czy zauważyłeś może wyciek oleju?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end	
+
+rule "Gdzie wyciek oleju"
+	when
+			Fact(fact == "Biegi_G");
+	then
+		String[] answers = {"Sprzęgło", "Skrzynia"};
+        String[] facts = {"wyciek_oleju_sprzeglo", "wyciek_skrzynia"};
+        Fact m = (new Question("Czy wyciek oleju idzie do sprzęgła czy wyciek jest w środkowej części skrzyni biegów?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end	
+
+rule "Czy wibracje biegi"
+	when
+			Fact(fact == "Biegi_H");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"wibracje_biegi", "nie_wibracje_biegi"};
+        Fact m = (new Question("Czy wyczuwasz wibracje?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end	
+
+rule "Czy kola wywazone"
+	when
+			Fact(fact == "Biegi_I");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"wywazone", "nie_wywazone"};
+        Fact m = (new Question("Wibracje mogą być spowodowane brakiem wyważenia kół. Czy koła zostały wyważone ostatnio?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end	
+
+//Reguly

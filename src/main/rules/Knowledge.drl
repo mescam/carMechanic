@@ -1,0 +1,617 @@
+//created on: 2015-01-10
+package pl.poznan.put.fc
+
+//list any import classes here.
+
+
+
+//declare any global variables here
+rule "Kierownica_A"
+	when
+		Fact(fact == "nie_utrudnione_kierowanie");
+	then
+		insert(new Fact("Kierownica_A"));
+end
+
+rule "Kierownica_L"
+	when
+		Fact(fact == "utrudnione_kierowanie");
+		Fact(fact == "nie_ciezki_powrot");
+	then
+		insert(new Fact("Kierownica_L"));
+end
+
+rule "Kierownica_F"
+	when
+		Fact(fact == "utrudnione_kierowanie");
+		Fact(fact == "ciezki_powrot");
+	then
+		insert(new Fact("Kierownica_F"));
+end
+
+rule "Kierownica_B"
+	when
+		Fact(fact == "luz");
+		Fact(fact == "Kierownica_A");
+	then
+		insert(new Fact("Kierownica_B"));
+end
+
+// if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Nie then G
+rule "Kierownica_G"
+	when
+		Fact(fact == "nie_luz");
+		Fact(fact == "nie_ciezki_powrot");
+		Fact(fact == "nie_utrudnione_kierowanie");
+	then
+		insert(new Fact("Kierownica_G"));
+end
+
+rule "Kierownica_Cel_Zbieznosc"
+	when
+		Fact(fact == "nie_luz");
+		Fact(fact == "ciezki_powrot");
+		Fact(fact == "nie_utrudnione_kierowanie");
+	then
+		insert(new Fact("cel_zbieznosc"));
+end
+
+//if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Tak, halas1=Tak then C
+rule "Kierownica_C"
+	when
+		Fact(fact == "luz");
+		Fact(fact == "nie_ciezki_powrot");
+		Fact(fact == "nie_utrudnione_kierowanie");
+		Fact(fact == "halas1");
+	then
+		insert(new Fact("Kierownica_C"));
+end
+
+//if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Tak, halas1=Nie then D
+rule "Kierownica_D"
+	when
+		Fact(fact == "nie_utrudnione_kierowanie");
+		Fact(fact == "nie_ciezki_powrot");
+		Fact(fact == "luz");
+		Fact(fact == "nie_halas1");
+	then
+		insert(new Fact("Kierownica_D"));
+end
+
+// if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Tak, halas1=Nie then cel |wymien lozyska kol
+rule "Kierownica Cel Lozyska"
+	when
+		Fact(fact == "nie_utrudnione_kierowanie");
+		Fact(fact == "ciezki_powrot");
+		Fact(fact == "luz");
+		Fact(fact == "nie_halas1");
+	then
+		insert(new Fact("cel_lozyska"));
+end
+
+// if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Tak, halas1=Tak then E
+rule "Kierownica_E"
+	when
+		Fact(fact == "nie_utrudnione_kierowanie");
+		Fact(fact == "ciezki_powrot");
+		Fact(fact == "luz");
+		Fact(fact == "halas1");
+	then
+		insert(new Fact("Kierownica_E"));
+end
+
+//if C, typHalas1=Syczacy than cel | docisnij wal posredni
+rule "Kierownica Cel Wal1"
+	when
+		Fact(fact == "Kierownica_C");
+		Fact(fact == "halas1_syczy");
+	then
+		insert(new Fact("cel_docisnij_wal"));
+end
+//If C, typHalas1=Brzeczy than cel | wymien wal posredni
+rule "Kierownica Cel Wal2"
+	when
+		Fact(fact == "Kierownica_C");
+		Fact(fact == "halas1_brzeczy");
+	then
+		insert(new Fact("cel_wymien_wal"));
+end
+//if E, stanPoprzeczne=Dobry then cel | dokrec drazki poprzeczne
+rule "Kierownica Cel Drazki1"
+	when
+		Fact(fact == "Kierownica_E");
+		Fact(fact == "drazki_dobry");
+	then
+		insert(new Fact("cel_dokrec_poprzeczne"));
+end
+//if E, stanPoprzeczne=Zly then cel | wymien drazko poprzeczne
+rule "Kierownica Cel Drazki2"
+	when
+		Fact(fact == "Kierownica_E");
+		Fact(fact == "drazki_zly");
+	then
+		insert(new Fact("cel_wymien_poprzeczne"));
+end
+
+//if D, szarpanieWibracje=Tak then cel | odpowietrz pompe
+rule "Kierownica Cel Odpowietrz"
+	when
+		Fact(fact == "Kierownica_D");
+		Fact(fact == "wibracje_szarpanie");
+	then
+		insert(new Fact("cel_odpowietrz_pompe"));
+end
+//if D, szarpanieWibracje=Nie then cel | wymien przekladnie
+rule "Kierownica Cel Wymien Przekladnie"
+	when
+		Fact(fact == "Kierownica_D");
+		Fact(fact == "nie_wibracje_szarpanie");
+	then
+		insert(new Fact("cel_wymien_przekladnie"));
+end
+//if F, halasSzarpanie=Halas then cel | wymien wal posredni
+rule "Kierownica Cel Wymien Wal"
+	when
+		Fact(fact == "Kierownica_F");
+		Fact(fact == "halas2");
+	then
+		insert(new Fact("cel_wymien_wal"));
+end
+//if F, halasSzarpanie=Szarpanie then cel | wymien pompe
+rule "Kierownica Cel Wymien pompe"
+	when
+		Fact(fact == "Kierownica_F");
+		Fact(fact == "szarpanie");
+	then
+		insert(new Fact("cel_wymien_pompe"));
+end
+
+
+//if G, halasNaBok=NaBok then H
+rule "Kierownica_H"
+	when
+		Fact(fact == "Kierownica_G");
+		Fact(fact == "sciaga");
+	then
+		insert(new Fact("Kierownica_H"));
+end
+//if G, halasNaBok=Halas then I
+rule "Kierownica_I"
+	when
+		Fact(fact == "Kierownica_G");
+		Fact(fact == "halas3");
+	then
+		insert(new Fact("Kierownica_I"));
+end
+//if H, stanOpon=Starte then cel | ustaw zbie�no��
+rule "Kierownica Cel Zbieznosc"
+	when
+		Fact(fact == "Kierownica_H");
+		Fact(fact == "opony_zuzyte");
+	then
+		insert(new Fact("cel_ustaw_zbieznosc"));
+end
+//if H, stanOpon=Normalne then J
+rule "Kierownica_J"
+	when
+		Fact(fact == "Kierownica_H");
+		Fact(fact == "opony_normalne");
+	then
+		insert(new Fact("Kierownica_J"));
+end
+
+//if I, typHalas2=Syczy then cel | wymien przew�d elastyczny
+rule "Kierownica Cel Wymien przewod"
+	when
+		Fact(fact == "Kierownica_I");
+		Fact(fact == "halas3_syczy");
+	then
+		insert(new Fact("cel_wymien_przewod_elastyczny"));
+end
+//if I, typHalas2=Brzeczy then cel | lepiej przytwierdz przewod elastyczny
+rule "Kierownica Cel Przytwierdz Przewod"
+	when
+		Fact(fact == "Kierownica_I");
+		Fact(fact == "halas3_brzeczy");
+	then
+		insert(new Fact("cel_przytwierdz_przewod_elastyczny"));
+end
+//if J, stanHamulce=Pogiete then cel | wymien tarcze przednie
+rule "Kierownica Cel Wymien Tarcze"
+	when
+		Fact(fact == "Kierownica_J");
+		Fact(fact == "tarcze_pogiete");
+	then
+		insert(new Fact("cel_wymien_tarcze_przednie"));
+end
+//if J, stanHamulce=Dobre then cel | wymien przekladnie
+rule "Kierownica Cel Wymien Przekladnie2"
+	when
+		Fact(fact == "Kierownica_J");
+		Fact(fact == "tarcze_ok");
+	then
+		insert(new Fact("cel_wymien_przekladnie"));
+end
+//if L, jakaPredkosc=Mala then cel | Sprawdz pasek pompy
+rule "Kierownica Cel Sprawdz Pasek Pompy"
+	when
+		Fact(fact == "Kierownica_L");
+		Fact(fact == "predkosc_mala");
+	then
+		insert(new Fact("cel_pasek_pompy"));
+end
+//if L, jakaPredkosc=Duza then K
+rule "Kierownica_K"
+	when
+		Fact(fact == "Kierownica_L");
+		Fact(fact == "predkosc_duza");
+	then
+		insert(new Fact("Kierownica_K"));
+end
+//if L, jakaPredkosc=Zawsze then cel | Sprawdz obudowe kolumny kierowniczej
+rule "Kierownica Cel Kolumna"
+	when
+		Fact(fact == "Kierownica_L");
+		Fact(fact == "predkosc_zawsze");
+	then
+		insert(new Fact("cel_obudwa_kolumny"));
+end
+//if K, stanPlyn=Tak then cel | wymien pompe
+rule "Kierownica Cel Wymien pompe2"
+	when
+		Fact(fact == "Kierownica_K");
+		Fact(fact == "plyn_ok");
+	then
+		insert(new Fact("cel_wymien_pompe"));
+end
+//if K, stanPlyn=Nie then cel | dolej plyn
+rule "Kierownica Cel Dolej plyn"
+	when
+		Fact(fact == "Kierownica_K");
+		Fact(fact == "plyn_nieok");
+	then
+		insert(new Fact("cel_dolej_plyn"));
+end
+
+
+
+
+// biegi
+rule "Biegi_A"
+	when
+		Fact(fact == "problem_sprzeglo");
+		Fact(fact == "halas_biegi");
+	then
+		insert(new Fact("Biegi_A"));
+end
+
+rule "Biegi_B"
+	when
+		Fact(fact == "problem_sprzeglo");
+		Fact(fact == "nie_halas_biegi");
+	then
+		insert(new Fact("Biegi_B"));
+end
+
+rule "Biegi_C"
+	when
+		Fact(fact == "nie_problem_sprzeglo");
+		Fact(fact == "halas_biegi");
+	then
+		insert(new Fact("Biegi_C"));
+end
+
+rule "Biegi_D"
+	when
+		Fact(fact == "nie_problem_sprzeglo");
+		Fact(fact == "nie_halas_biegi");
+	then
+		insert(new Fact("Biegi_D"));
+end
+
+rule "Sprzeglo klekotanie"
+	when
+        Fact(fact == "Biegi_A");
+        Fact(fact == "klekot_sprzeglo");
+    then
+		insert(new Fact("Biegi_A1"));
+end
+	
+rule "Biegi cel sprezyna powrotu"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_A");
+        Fact(fact == "halas_lozysko");
+    then
+        insert(new Fact("cel_wymien sprezyne"));
+end	
+	
+rule "Biegi_E"
+	when
+        Fact(fact == "Biegi_A1");
+        Fact(fact == "poslizg_sprzeglo");
+    then
+		insert(new Fact("Biegi_E"));
+end
+
+rule "Biegi_F"
+	when
+        Fact(fact == "Biegi_A1");
+        Fact(fact == "szarpanie_sprzeglo");
+    then
+		insert(new Fact("Biegi_F"));
+end
+
+rule "Biegi cel tarcza sprzegla"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_F");
+        Fact(fact == "wyciek_oleju_sprzeglo");
+    then
+        insert(new Fact("cel_wymiana_tarcza"));
+		
+end	
+
+rule "Biegi cel kolo zamachowe"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_F");
+        Fact(fact == "nie_wyciek_oleju_sprzeglo");
+    then
+		insert(new Fact("cel_wymiana_zamachowe"));
+end	
+
+rule "Biegi_E1"
+	when
+        Fact(fact == "Biegi_E");
+        Fact(fact == "nie_przegrzanie");
+    then
+		insert(new Fact("Biegi_E1"));
+end
+
+rule "Biegi cel przegrzanie okladzin"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_E");
+        Fact(fact == "przegrzanie");
+    then
+		insert(new Fact("cel_ochlodzenie_okladzin"));
+end	
+
+rule "Biegi cel pierscien dociskowy"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_E1");
+        Fact(fact == "pierscien_odksztalcony");
+    then
+        insert(new Fact("cel_wymiana_dociskowy"));
+end	
+
+rule "Biegi cel tarcza sprzegla 2"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_E1");
+        Fact(fact == "nie_pierscien_odksztalcony");
+    then
+        insert(new Fact("cel_wymiana_tarcza_2"));
+end	
+
+rule "Biegi_B1"
+	when
+        Fact(fact == "Biegi_B");
+        Fact(fact == "szarpanie_sprzeglo");
+    then
+        insert(new Fact("Biegi_B1"));
+end	
+
+rule "Biegi_B2"
+	when
+        Fact(fact == "Biegi_B");
+        Fact(fact == "nie_szarpanie_sprzeglo");
+    then
+        insert(new Fact("Biegi_B2"));
+end	
+
+rule "Biegi cel kolo zamachowe 2"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_B1");
+        Fact(fact == "poslizg_sprzeglo");
+    then
+        insert(new Fact("cel_wymiana_zamachowe_2"));
+end	
+
+rule "Biegi cel walek napedowy"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_B1");
+        Fact(fact == "nie_poslizg_sprzeglo");
+    then
+        insert(new Fact("cel_wymiana_walek"));
+end	
+
+rule "Biegi cel walek widelek"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_B2");
+        Fact(fact == "niepelne");
+    then
+        insert(new Fact("cel_nasmarowac_walek"));
+end	
+
+rule "Biegi cel uklad sterowania"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_B2");
+        Fact(fact == "nadmierna");
+    then
+        insert(new Fact("cel_przesmaruj_sterowanie"));
+end	
+
+rule "Biegi_C1"
+	when
+        Fact(fact == "Biegi_C");
+        Fact(fact == "biegi_neutralny");
+    then
+        insert(new Fact("Biegi_C1"));
+end	
+
+rule "Biegi_C2"
+	when
+        Fact(fact == "Biegi_C");
+        Fact(fact == "biegi_wsteczny");
+    then
+        insert(new Fact("Biegi_C2"));
+end	
+
+rule "Biegi_C3"
+	when
+        Fact(fact == "Biegi_C");
+        Fact(fact == "biegi_wszystkie");
+    then
+        insert(new Fact("Biegi_C3"));
+end	
+
+rule "Biegi cel kola zebate"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_C1");
+        Fact(fact == "zebate_zuzyte");
+    then
+        insert(new Fact("cel_wymien_zebate"));
+end
+	
+rule "Biegi cel lozysko wyciskowe"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_C1");
+        Fact(fact == "nie_zebate_zuzyte");
+    then
+        insert(new Fact("cel_wymien_wyciskowe"));
+end	
+
+rule "Biegi cel synchronizator"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_C2");
+        Fact(fact == "synchro_zuzyte");
+    then
+        insert(new Fact("cel_wymien_synchro"));
+end	
+
+rule "Biegi cel kolo talerzowe"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_C2");
+        Fact(fact == "nie_synchro_zuzyte");
+    then
+        insert(new Fact("cel_wymien_talerzowe"));
+end	
+
+rule "Biegi cel lozyska"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_C3");
+        Fact(fact == "poziom_olej_biegi");
+    then
+       insert(new Fact("cel_wymien_lozyska"));
+end	
+
+rule "Biegi cel dolej olej"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_C3");
+        Fact(fact == "nie_poziom_olej_biegi");
+    then
+        insert(new Fact("cel_dolej_olej"));
+end	
+
+rule "Biegi cel widelki wlaczania"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_D");
+        Fact(fact == "samoczynne");
+    then
+        insert(new Fact("cel_wymiana_wlaczania_biegow"));
+end	
+
+rule "Biegi_D1"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_D");
+        Fact(fact == "nie_samoczynne");
+    then
+        insert(new Fact("Biegi_D1"));
+end
+
+rule "Biegi_G"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_D1");
+        Fact(fact == "wyciek_oleju_biegi");
+    then
+        insert(new Fact("Biegi_G"));
+end		
+
+rule "Biegi_H"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_D1");
+        Fact(fact == "nie_wyciek_oleju_biegi");
+    then
+        insert(new Fact("Biegi_H"));
+end	
+
+rule "Biegi cel tuleja"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_G");
+        Fact(fact == "wyciek_olej_sprzeglo");
+    then
+        insert(new Fact ("cel_wymien_tuleje"));
+end	
+
+rule "Biegi cel obudowa skrzyni"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_G");
+        Fact(fact == "wyciek_skrzynia");
+    then
+       insert(new Fact("cel_napraw_obudowe"));
+end	
+
+rule "Biegi_I"
+	when
+		Fact(fact == "Biegi_H");
+		Fact(fact == "wibracje_biegi");
+	then 
+		insert(new Fact("Biegi_I"));
+end
+
+rule "Biegi cel przegub polosie"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_H");
+        Fact(fact == "nie_wibracje_biegi");
+    then
+        insert(new Fact("cel_wymien_przegub"));
+end	
+
+rule "Biegi cel polosie napedowe"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_I");
+        Fact(fact == "wywazone");
+    then
+        insert(new Fact("cel_wymien_napedowe"));
+end	
+
+rule "Biegi cel wywaz"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_I");
+        Fact(fact == "nie_wywazone");
+    then
+        insert(new Fact("cel_wywaz_kola"));
+end	
+
