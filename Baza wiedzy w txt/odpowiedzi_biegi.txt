@@ -1,0 +1,65 @@
+﻿cel_wymien_sprezyne
+Hałas łożyska spowodowany jest osłabioną sprężyną powrotu, którą należy wymienić.
+
+cel_wymiana_tarcza
+Klekoczący hałas wraz z szarapaniem wskazuję na usterki elementów tarczy sprzęgła lub koła zamachowego. Wyciek oleju wskazuję na tarczę sprzęgła. Należy ją wymienić.
+
+cel_wymiana_zamachowe
+Klekoczący hałas wraz z szarapaniem wskazuję na usterki elementów tarczy sprzęgła lub koła zamachowego. Brak wycieku oleju wskazuję na koło zamachowe. Należy ją wymienić.
+
+cel_ochlodzenie_okladzin
+Przegrzanie okładzin tarczy sprzęgła może powodować poślizg sprzęgła oraz słyszalny klekot. Rozwiązaniem jest odczekanie, aż okładziny się schłodzą. Kierowca powinnien zmienić nawyki jazdy.
+
+cel_wymiana_dociskowy
+Odkształcony pierścień nie nadaję się do dalszego użytku ani nawet do naprawy. Musi zostać wymieniony.
+
+cel_wymiana_tarcza_2
+Poślizg sprzęgła, klekotanie oraz dobry pierścień dociskowy wskazują na uszkodzoną tarczę sprzęgła. Należy wymienić element.
+
+cel_wymiana_zamachowe_2
+Występowanie poślizgu oraz szarpania sugeruję odkształcenie koła zamachowego. Część powinna zostać wymieniona na nową.
+
+cel_wymiana_walek
+Doszło do zużycia wielowypustów wałka napędowego. Należy wymięnić cały wałek napędowy.
+
+cel_nasmarować_walek
+Szarpanie oraz niepełnie wyłączanie sprzęgła spowodowane jest brakiem lub slabym nasmarowaniem wałka widełek. Element należy wymontować nasmarować i ponowanie zamontować.
+
+cel_przesmaruj_sterowanie
+Wciśnięcie sprzęgła wymaga nadmiernej siły, jeżeli układ sterowania zakleszczył się. W tej sytuacji należy przesmatować i wyluzować układ.
+
+cel_wymien_zebate
+Wystarczy wymienić zużyte koła zębate, aby pozbyć się hałasu.
+
+cel_wymien_wyciskowe
+Jeżeli koła zębate są w dobrym stanie, hałas na biegu neutralnym spowodowany jest przez zmęczone łożysko wyciskowe sprzęgła.
+
+cel_wymien_synchro
+Hałas na wstecznym biegu spowodowany był zużytym synchronizatorem biegu 1-ego i 2-ego.
+
+cel_wymien_talerzowe
+Hałas na wstecznym biegu spowodowany był przez zużyte koło talerzowe.
+
+cel_wymien_lozyska
+Jeśli hałas występował tylko na określonym biegu należy wymienić łozysko danego biegu. W innym wypadku zaleca się wymiane wszystkich łożysk biegów.
+
+cel_dolej_olej
+Należy uzupełnić olej do odpowiedniego poziomu. Jazda z mniejszą ilością oleju niż podaje producent może powodować wiele kosztownych uszkodzeń zespołu silnika i skrzyni biegów.
+
+cel_wymiana_wlaczania_biegow
+Problem spowodowany jest usterkami widełek włączania biegu. Widełki te można naprawić lub wymienić na nowe w zależności od zużycia.
+
+cel_wymien_tuleje
+Wyciek oleju do sprzęgła spowodowany jest nieszczelnością tuleji prowadzącej łozyska wyciskowego. Element należy wymienić na nową.
+
+cel_napraw_obudowe
+Należy zlokalizować dokładne miejsce wycieku w środkowej części skrzyni biegów. Uszkodzena obudowę można naprawić.
+
+cel_wymien_przegub
+Występowanie problemy skrzyni biegów bez wcześniej wymienionych objawów wskazuje na zużycie przegubów półosi. Należy wymienić element.
+
+cel_wymien_napedowe
+Wibracje przy wyważonych kołach spowodowane są przez zgiętą półoś napędową. Wymien element
+
+cel_wywaz_kola
+Wibracje spowodowane są brakiem wyważenia kół. Należy je wyważyć.

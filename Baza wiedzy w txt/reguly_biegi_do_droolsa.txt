@@ -32,7 +32,7 @@ rule "Szarpanie lub poslizg sprzegla"
 	then
 		String[] answers = {"Poślizg", "Szarpanie"};
         String[] facts = {"poslizg_sprzeglo", "szarpanie_sprzeglo"};
-        Fact m = (new Question("Odczuwasz poślizg sprzęgła lub szarpanie?", answers, facts)).ask();
+        Fact m = (new Question("Z klekotaniem wiąże się pośliz sprzęgła albo szarpanie. Czy które z nich występuje", answers, facts)).ask();
         if(m != null)
         	insert(m);
 end	
@@ -43,7 +43,7 @@ rule "Czy wyciek oleju 1"
 	then
 		String[] answers = {"Tak", "Nie"};
         String[] facts = {"wyciek_oleju_sprzeglo", "nie_wyciek_oleju_sprzeglo"};
-        Fact m = (new Question("Czy zauważyłeś może wyciek oleju?", answers, facts)).ask();
+        Fact m = (new Question("Z szarpaniem sprzęgła czasami wiąże się z wyciekiem oleju. Czy zauważyłeś może wyciek oleju?", answers, facts)).ask();
         if(m != null)
         	insert(m);
 end	
@@ -54,7 +54,7 @@ rule "Czy przegrzanie okladzin tarczy sprzegla"
 	then
 			String[] answers = {"Tak", "Nie"};
 			String[] facts = {"przegrzanie", "nie_przegrzanie"};
-			Fact m = (new Question("Czy okładziny tarczy sprzegła są przegrzane?", answers, facts)).ask();
+			Fact m = (new Question("Poślizg może wiązać sie z przegrzaniem okładzin. Czy okładziny tarczy sprzegła są przegrzane?", answers, facts)).ask();
 			if(m != null)
         	insert(m);
 end	
@@ -65,7 +65,7 @@ rule "Czy pierscien dociskowy odksztalcony"
 	then
 			String[] answers = {"Tak", "Nie"};
 			String[] facts = {"pierscien_odksztalcony", "nie_pierscien_odksztalcony"};
-			Fact m = (new Question("Czy pierścień dociskowy jest odkształcony?", answers, facts)).ask();
+			Fact m = (new Question("Jeśli nie przegrzanie okładzin to może uszkodzenie pierścienia dociskowego. Czy pierścień dociskowy jest odkształcony?", answers, facts)).ask();
 			if(m != null)
         	insert(m);
 end	
@@ -87,7 +87,7 @@ rule "Poslizg sprzeglo"
 	then
 			String[] answers = {"Tak", "Nie"};
 			String[] facts = {"poslizg_sprzeglo", "nie_poslizg_sprzeglo"};
-			Fact m = (new Question("Czy wyczuwasz poślizg sprzęgła?", answers, facts)).ask();
+			Fact m = (new Question("Czy wyczuwasz oprócz szarpanie, również poślizg sprzęgła?", answers, facts)).ask();
 			if(m != null)
         	insert(m);
 end	
@@ -98,7 +98,7 @@ rule "Niepelna czy nadmierna"
 	then
 			String[] answers = {"Niepełne wyłączanie", "Nadmierna siła"};
 			String[] facts = {"niepelne", "nadmierna"};
-			Fact m = (new Question("Czy dochodzi do niepełnego wyłączania sprzęgła czy może potrzebna jest nadmierna siła, aby wciśnąć do końca sprzęgło?", answers, facts)).ask();
+			Fact m = (new Question("Jeśli nie szarpanie to musi dochodzić do niepełnego wyłączania sprzęgła lub potrzebna jest nadmierna siła, aby wciśnąć do końca sprzęgło?", answers, facts)).ask();
 			if(m != null)
         	insert(m);
 end	
@@ -158,17 +158,6 @@ rule "Czy samoczynne wylaczenie"
         	insert(m);
 end	
 
-rule "Czy samoczynne wylaczenie"
-	when
-			Fact(fact == "Biegi_D");
-	then
-			String[] answers = {"Tak", "Nie"};
-			String[] facts = {"samoczynne", "nie_samoczynne"};
-			Fact m = (new Question("Czy biegi samoczynnie się wyłączają?", answers, facts)).ask();
-			if(m != null)
-        	insert(m);
-end	
-
 rule "Czy wyciek oleju 2"
 	when
 			Fact(fact == "Biegi_D1");
@@ -208,7 +197,7 @@ rule "Czy kola wywazone"
 	then
 		String[] answers = {"Tak", "Nie"};
         String[] facts = {"wywazone", "nie_wywazone"};
-        Fact m = (new Question("Czy koła zostały wyważone ostatnio?", answers, facts)).ask();
+        Fact m = (new Question("Wibracje mogą być spowodowane brakiem wyważenia kół. Czy koła zostały wyważone ostatnio?", answers, facts)).ask();
         if(m != null)
         	insert(m);
 end	
@@ -321,7 +310,7 @@ rule "Biegi cel pierscien dociskowy"
         Fact(fact == "Biegi_E1");
         Fact(fact == "pierscien_odksztalcony");
     then
-        Fact(new Fact == ("cel_wymiana_dociskowy"));
+        insert(new Fact("cel_wymiana_dociskowy"));
 end	
 
 rule "Biegi cel tarcza sprzegla 2"
@@ -330,7 +319,7 @@ rule "Biegi cel tarcza sprzegla 2"
         Fact(fact == "Biegi_E1");
         Fact(fact == "nie_pierscien_odksztalcony");
     then
-        Fact(new Fact == ("cel_wymiana_tarcza_2"));
+        insert(new Fact("cel_wymiana_tarcza_2"));
 end	
 
 rule "Biegi_B1"
@@ -338,7 +327,7 @@ rule "Biegi_B1"
         Fact(fact == "Biegi_B");
         Fact(fact == "poslizg_sprzeglo");
     then
-        Fact(new Fact == ("Biegi_B1"));
+        Finsert(new Fact("Biegi_B1"));
 end	
 
 rule "Biegi_B2"
@@ -346,7 +335,7 @@ rule "Biegi_B2"
         Fact(fact == "Biegi_B");
         Fact(fact == "nie_poslizg_sprzeglo");
     then
-        Fact(new Fact == ("Biegi_B2"));
+        insert(new Fact("Biegi_B2"));
 end	
 
 rule "Biegi cel kolo zamachowe 2"
@@ -355,7 +344,7 @@ rule "Biegi cel kolo zamachowe 2"
         Fact(fact == "Biegi_B1");
         Fact(fact == "poslizg_sprzeglo");
     then
-        Fact(new Fact == ("cel_wymiana_zamachowe_2"));
+        insert(new Fact("cel_wymiana_zamachowe_2"));
 end	
 
 rule "Biegi cel walek napedowy"
@@ -364,7 +353,7 @@ rule "Biegi cel walek napedowy"
         Fact(fact == "Biegi_B1");
         Fact(fact == "nie_poslizg_sprzeglo");
     then
-        Fact(new Fact == ("cel_wymiana_walek"));
+        insert(new Fact("cel_wymiana_walek"));
 end	
 
 rule "Biegi cel walek widelek"
@@ -373,7 +362,7 @@ rule "Biegi cel walek widelek"
         Fact(fact == "Biegi_B2");
         Fact(fact == "niepelne");
     then
-        Fact(new Fact == ("cel_nasmarowac_walek"));
+        insert(new Fact("cel_nasmarowac_walek"));
 end	
 
 rule "Biegi cel uklad sterowania"
@@ -382,7 +371,7 @@ rule "Biegi cel uklad sterowania"
         Fact(fact == "Biegi_B2");
         Fact(fact == "nadmierna");
     then
-        Fact(new Fact == ("cel_przesmaruj_sterowanie"));
+        insert(new Fact("cel_przesmaruj_sterowanie"));
 end	
 
 rule "Biegi_C1"
@@ -390,7 +379,7 @@ rule "Biegi_C1"
         Fact(fact == "Biegi_C");
         Fact(fact == "biegi_neutralny");
     then
-        Fact(new Fact == ("Biegi_C1"));
+        insert(new Fact("Biegi_C1"));
 end	
 
 rule "Biegi_C2"
@@ -398,7 +387,7 @@ rule "Biegi_C2"
         Fact(fact == "Biegi_C");
         Fact(fact == "biegi_wsteczny");
     then
-        Fact(new Fact == ("Biegi_C2"));
+        insert(new Fact("Biegi_C2"));
 end	
 
 rule "Biegi_C3"
@@ -406,7 +395,7 @@ rule "Biegi_C3"
         Fact(fact == "Biegi_C");
         Fact(fact == "biegi_wszystkie");
     then
-        Fact(new Fact == ("Biegi_C3"));
+        insert(new Fact("Biegi_C3"));
 end	
 
 rule "Biegi cel kola zebate"
@@ -415,7 +404,7 @@ rule "Biegi cel kola zebate"
         Fact(fact == "Biegi_C1");
         Fact(fact == "zebate_zuzyte");
     then
-        Fact(new Fact == ("cel_wymien_zebate"));
+        insert(new Fact("cel_wymien_zebate"));
 end
 	
 rule "Biegi cel lozysko wyciskowe"
@@ -424,7 +413,7 @@ rule "Biegi cel lozysko wyciskowe"
         Fact(fact == "Biegi_C1");
         Fact(fact == "nie_zebate_zuzyte");
     then
-        Fact(new Fact == ("cel_wymien_wyciskowe"));
+        insert(new Fact("cel_wymien_wyciskowe"));
 end	
 
 rule "Biegi cel synchronizator"
@@ -433,7 +422,7 @@ rule "Biegi cel synchronizator"
         Fact(fact == "Biegi_C2");
         Fact(fact == "synchro_zuzyte");
     then
-        Fact(new Fact == ("cel_wymien_synchro"));
+        insert(new Fact("cel_wymien_synchro"));
 end	
 
 rule "Biegi cel kolo talerzowe"
@@ -442,7 +431,7 @@ rule "Biegi cel kolo talerzowe"
         Fact(fact == "Biegi_C2");
         Fact(fact == "nie_synchro_zuzyte");
     then
-        Fact(new Fact == ("cel_wymien_talerzowe"));
+        insert(new Fact("cel_wymien_talerzowe"));
 end	
 
 rule "Biegi cel lozyska"
@@ -451,7 +440,7 @@ rule "Biegi cel lozyska"
         Fact(fact == "Biegi_C3");
         Fact(fact == "poziom_olej_biegi");
     then
-        Fact(new Fact == ("cel_wymien_lozyska"));
+       insert(new Fact("cel_wymien_lozyska"));
 end	
 
 rule "Biegi cel dolej olej"
@@ -460,7 +449,7 @@ rule "Biegi cel dolej olej"
         Fact(fact == "Biegi_C3");
         Fact(fact == "nie_poziom_olej_biegi");
     then
-        Fact(new Fact == ("cel_dolej_olej"));
+        insert(new Fact("cel_dolej_olej"));
 end	
 
 rule "Biegi cel widelki wlaczania"
@@ -469,7 +458,7 @@ rule "Biegi cel widelki wlaczania"
         Fact(fact == "Biegi_D");
         Fact(fact == "samoczynne");
     then
-        Fact(new Fact == ("cel_wymiana_wlaczania_biegow"));
+        insert(new Fact("cel_wymiana_wlaczania_biegow"));
 end	
 
 rule "Biegi_D1"
@@ -478,7 +467,7 @@ rule "Biegi_D1"
         Fact(fact == "Biegi_D");
         Fact(fact == "nie_samoczynne");
     then
-        Fact(new Fact == ("Biegi_D1"));
+        insert(new Fact("Biegi_D1"));
 end
 
 rule "Biegi_G"
@@ -487,7 +476,7 @@ rule "Biegi_G"
         Fact(fact == "Biegi_D1");
         Fact(fact == "poziom_oleju_biegi");
     then
-        Fact(new Fact == ("Biegi_G"));
+        insert(new Fact("Biegi_G"));
 end		
 
 rule "Biegi_H"
@@ -496,7 +485,7 @@ rule "Biegi_H"
         Fact(fact == "Biegi_D1");
         Fact(fact == "nie_poziom_oleju_biegi");
     then
-        Fact(new Fact == ("Biegi_H"));
+        insert(new Fact("Biegi_H"));
 end	
 
 rule "Biegi cel tuleja"
@@ -505,7 +494,7 @@ rule "Biegi cel tuleja"
         Fact(fact == "Biegi_G");
         Fact(fact == "wyciek_olej_sprzeglo");
     then
-        Fact(new Fact == ("cel_wymien_tuleje"));
+        insert(new Fact ("cel_wymien_tuleje"));
 end	
 
 rule "Biegi cel obudowa skrzyni"
@@ -514,7 +503,7 @@ rule "Biegi cel obudowa skrzyni"
         Fact(fact == "Biegi_G");
         Fact(fact == "wyciek_skrzynia");
     then
-        Fact(new Fact == ("cel_napraw_obudowe"));
+       insert(new Fact("cel_napraw_obudowe"));
 end	
 
 rule "Biegi_I"
@@ -522,7 +511,7 @@ rule "Biegi_I"
 		Fact(fact == "Biegi_H");
 		Fact(fact == "wibracje_biegi");
 	then 
-		Fact(new Fact == ("Biegi_I"));
+		insert(new Fact("Biegi_I"));
 end
 
 rule "Biegi cel przegub polosie"
@@ -531,7 +520,7 @@ rule "Biegi cel przegub polosie"
         Fact(fact == "Biegi_H");
         Fact(fact == "nie_wibracje_biegi");
     then
-        Fact(new Fact == ("cel_wymien_przegub"));
+        insert(new Fact("cel_wymien_przegub"));
 end	
 
 rule "Biegi cel polosie napedowe"
@@ -540,7 +529,7 @@ rule "Biegi cel polosie napedowe"
         Fact(fact == "Biegi_I");
         Fact(fact == "wywazone");
     then
-        Fact(new Fact == ("cel_wymien_napedowe"));
+        insert(new Fact("cel_wymien_napedowe"));
 end	
 
 rule "Biegi cel wywaz"
@@ -549,6 +538,6 @@ rule "Biegi cel wywaz"
         Fact(fact == "Biegi_I");
         Fact(fact == "nie_wywazone");
     then
-        Fact(new Fact == ("cel_wywaz_kola"));
+        insert(new Fact("cel_wywaz_kola"));
 end	
 
