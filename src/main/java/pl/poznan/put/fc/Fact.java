@@ -13,5 +13,6 @@ public class Fact {
 
 	public Fact(String fact) {
 		this.fact = fact;
+		System.out.println("Added fact " + fact);
 	}
 }

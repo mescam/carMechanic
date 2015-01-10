@@ -37,7 +37,7 @@ rule "Problem z kierownicą"
         String[] facts2 = {"ciezki_powrot", "nie_ciezki_powrot"};
         Fact m2 = (new Question("Czy występuje ciężki powrót kierownicy do pozycji centralnej?", answers, facts2)).ask();
         if (m != null)
-        	insert(m);
+        	insert(m2);
 end
 
 rule "Czy luz w kierownicy"
@@ -68,7 +68,7 @@ rule "Typ halas 1"
 	then
 		String[] answers = {"Syczący", "Brzęczący"};
         String[] facts = {"halas1_syczy", "halas1_brzeczy"};
-        Fact m = (new Question("Hałas jest syczący czy brzęcząćy?", answers, facts)).ask();
+        Fact m = (new Question("Hałas jest syczący czy brzęczący?", answers, facts)).ask();
         if(m != null)
         	insert(m);
 end
@@ -84,6 +84,94 @@ rule "Wibracje i szarpanie"
         	insert(m);
 end
 
+rule "Stan drazkow"
+	when
+		Fact(fact == "Kierownica_E");
+	then
+		String[] answers = {"Dobry", "Zły"};
+        String[] facts = {"drazki_dobry", "drazki_zly"};
+        Fact m = (new Question("Jaki jest stan drążków poprzecznych?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+
+rule "Halas lub szarpanie"
+	when
+		Fact(fact == "Kierownica_F");
+	then
+		String[] answers = {"Hałas", "Szarpanie"};
+        String[] facts = {"halas2", "szarpanie"};
+        Fact m = (new Question("Występuje hałas czy szarpanie?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+
+rule "Sciaga na bok czy halasuje?"
+	when
+		Fact(fact == "Kierownica_G");
+	then
+		String[] answers = {"Ściąga na bok", "Hałasuje"};
+        String[] facts = {"sciaga", "halas3"};
+        Fact m = (new Question("Ściąga samochód na bok czy hałasuje?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+
+rule "Stan opon"
+	when
+		Fact(fact == "Kierownica_H");
+	then
+		String[] answers = {"Nadmiernie zużyte", "Normalny"};
+        String[] facts = {"opony_zuzyte", "opony_normalne"};
+        Fact m = (new Question("Oceń stan opon.", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+
+rule "Stan przednich tarcz"
+	when
+		Fact(fact == "Kierownica_J");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"tarcze_pogiete", "tarcze_ok"};
+        Fact m = (new Question("Czy przednie tarcze są pogięte?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+
+
+rule "Typ halas 3"
+	when
+		Fact(fact == "Kierownica_I");
+	then
+		String[] answers = {"Syczący", "Brzęczący"};
+        String[] facts = {"halas3_syczy", "halas3_brzeczy"};
+        Fact m = (new Question("Hałas jest syczący czy brzęczący?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+		
+rule "Predkosc utrudniona"
+	when
+		Fact(fact == "Kierownica_L");
+	then
+		String[] answers = {"Mała prędkość", "Duża prędkość", "Niezależnie od prędkości"};
+        String[] facts = {"predkosc_mala", "predkosc_duza", "predkosc_zawsze"};
+        Fact m = (new Question("Przy jakiej prędkości występuje utrudnienie w kierowaniu?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+
+rule "Stan plynu ukladu"
+	when
+		Fact(fact == "Kierownica_K");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"plyn_ok", "plyn_nieok"};
+        Fact m = (new Question("Czy poziom płynu układu kierowniczego jest powyżej minimum?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
 
 /**
 REGULY POZNIEJ DO INNEGO PLIKU
@@ -249,11 +337,113 @@ rule "Kierownica Cel Wymien pompe"
 		insert(new Fact("cel_wymien_pompe"));
 end
 
-rule "Problem z biegami"
-    //include attributes such as "salience" here...
-    when
-        Fact(fact == "problem_biegi");
-    then
-        System.out.println("Zezłomuj samochód");
 
+//if G, halasNaBok=NaBok then H
+rule "Kierownica_H"
+	when
+		Fact(fact == "Kierownica_G");
+		Fact(fact == "sciaga");
+	then
+		insert(new Fact("Kierownica_H"));
 end
+//if G, halasNaBok=Halas then I
+rule "Kierownica_I"
+	when
+		Fact(fact == "Kierownica_G");
+		Fact(fact == "halas3");
+	then
+		insert(new Fact("Kierownica_I"));
+end
+//if H, stanOpon=Starte then cel | ustaw zbie�no��
+rule "Kierownica Cel Zbieznosc"
+	when
+		Fact(fact == "Kierownica_H");
+		Fact(fact == "opony_zuzyte");
+	then
+		insert(new Fact("cel_ustaw_zbieznosc"));
+end
+//if H, stanOpon=Normalne then J
+rule "Kierownica_J"
+	when
+		Fact(fact == "Kierownica_H");
+		Fact(fact == "opony_normalne");
+	then
+		insert(new Fact("Kierownica_J"));
+end
+
+//if I, typHalas2=Syczy then cel | wymien przew�d elastyczny
+rule "Kierownica Cel Wymien przewod"
+	when
+		Fact(fact == "Kierownica_I");
+		Fact(fact == "halas3_syczy");
+	then
+		insert(new Fact("cel_wymien_przewod_elastyczny"));
+end
+//if I, typHalas2=Brzeczy then cel | lepiej przytwierdz przewod elastyczny
+rule "Kierownica Cel Przytwierdz Przewod"
+	when
+		Fact(fact == "Kierownica_I");
+		Fact(fact == "halas3_brzeczy");
+	then
+		insert(new Fact("cel_przytwierdz_przewod_elastyczny"));
+end
+//if J, stanHamulce=Pogiete then cel | wymien tarcze przednie
+rule "Kierownica Cel Wymien Tarcze"
+	when
+		Fact(fact == "Kierownica_J");
+		Fact(fact == "tarcze_pogiete");
+	then
+		insert(new Fact("cel_wymien_tarcze_przednie"));
+end
+//if J, stanHamulce=Dobre then cel | wymien przekladnie
+rule "Kierownica Cel Wymien Przekladnie2"
+	when
+		Fact(fact == "Kierownica_H");
+		Fact(fact == "tarcze_ok");
+	then
+		insert(new Fact("cel_wymien_przekladnie"));
+end
+//if L, jakaPredkosc=Mala then cel | Sprawdz pasek pompy
+rule "Kierownica Cel Sprawdz Pasek Pompy"
+	when
+		Fact(fact == "Kierownica_L");
+		Fact(fact == "predkosc_mala");
+	then
+		insert(new Fact("cel_pasek_pompy"));
+end
+//if L, jakaPredkosc=Duza then K
+rule "Kierownica_K"
+	when
+		Fact(fact == "Kierownica_L");
+		Fact(fact == "predkosc_duza");
+	then
+		insert(new Fact("Kierownica_K"));
+end
+//if L, jakaPredkosc=Zawsze then cel | Sprawdz obudowe kolumny kierowniczej
+rule "Kierownica Cel Kolumna"
+	when
+		Fact(fact == "Kierownica_L");
+		Fact(fact == "predkosc_zawsze");
+	then
+		insert(new Fact("cel_obudwa_kolumny"));
+end
+//if K, stanPlyn=Tak then cel | wymien pompe
+rule "Kierownica Cel Wymien pompe2"
+	when
+		Fact(fact == "Kierownica_K");
+		Fact(fact == "plyn_ok");
+	then
+		insert(new Fact("cel_wymien_pompe"));
+end
+//if K, stanPlyn=Nie then cel | dolej plyn
+rule "Kierownica Cel Dolej plyn"
+	when
+		Fact(fact == "Kierownica_K");
+		Fact(fact == "plyn_nieok");
+	then
+		insert(new Fact("cel_dolej_plyn"));
+end
+
+
+
+
