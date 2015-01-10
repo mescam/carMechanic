@@ -1,0 +1,46 @@
+﻿cel_zbieznosc
+Problemy z kierowaniem nie są związane z mechaniką, lecz z brakiem wyważenia kół.
+cel_lozyska
+Problem z powrotem do pozycji centralnej oraz odczuwalny luz jest spowodowany zużyciem łożysk kół. Zalecana jest wymiana.
+cel_docisnij_wal
+Hałas sugeruje problem z połaczeniem wału pośredniego. Mocne dociśnięcie elementu powinno rozwiązać problemy
+cel_wymien_wal
+Hałas sugeruje uszkodzenie elementów wału pośredniego. Należy wymienić cały wał pośredni.
+cel_dokrec_poprzeczne
+Luzy oraz hałasy spowodowane są złym montażem drążkó poprzecznych. Należy je wymontować, jeszcze raz sprawdzić stan i zamontować ponownie we właściwy sposób.
+cel_wymien_poprzeczne
+Luzy i zły stan drążków klasyfikuje je do wymiany.
+cel_odpowietrz_pompe
+Występowanie luzu oraz szarpnięć i wibracji wskazuje na zapowietrzenie pompy wspomagania. Odpowietrzenie rozwiąże problemy.
+cel_wymien_przekladnie
+Problemy wskazują na uszkodzenie przekładni kierowniczej. Należy ją zregenerować lub wymienić na nową.
+cel_wymien_pompe
+Problemy z kierowanie, ciężki powrót oraz szarpanie wskazuje na problemu z pompą wspomagania. Należy ją wymienić na nowy egzemplarz.
+cel_ustaw_zbieznosc
+Problemy z kierowaniem nie są związane z mechaniką, lecz z brakiem wyważenia kół.
+cel_wymien_przewod_elastyczny
+Syczenie wskazuje na nieszczelność przewodu elastycznego. Przewód należy wymienić.
+cel_przytwierdz_przewod_elastyczny
+Brzęczenia wskazuje na obijanie się przewodu wlastycznego o inne elementy. Sugerujemy przymocowanie przewodu.
+cel_wymien_tarcze_przednie
+Problemy wynikały pogiątych tarcz. Należy je wymienić na nowe. Nie powinno się ich naprawiać na własną rekę.
+cel_pasek_pompy
+Utrudnienie kierowania na małych prędkościach wynika z poluzowania paska pompy układu kierowniczego. Należy go zamontować poprawnie.
+cel_obudwa_kolumny
+Utrudnienie kierowania spowodowane jest przemieszczeniem obudowy kolumny kierowniczej, która ociera się o kierownice.
+
+
+dla //if K, stanPlyn=Tak then cel | wymien pompe
+rule "Kierownica Cel Wymien pompe2"
+	when
+		Fact(fact == "Kierownica_K");
+		Fact(fact == "plyn_ok");
+	then
+		insert(new Fact("cel_wymien_pompe"));
+end
+
+zrób cel_wymien_pompe_2
+Utrudnione kierowanie spowodowane jest usterką pompy wspomogania. Należy wymienić ją na działający egzemplarz.
+cel_dolej_plyn
+Należy uzupełnić płyn do poziomu podanego przez producenta.
+
