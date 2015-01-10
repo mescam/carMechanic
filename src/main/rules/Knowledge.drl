@@ -262,7 +262,7 @@ rule "Kierownica Cel Wymien pompe2"
 		Fact(fact == "Kierownica_K");
 		Fact(fact == "plyn_ok");
 	then
-		insert(new Fact("cel_wymien_pompe"));
+		insert(new Fact("cel_wymien_pompe_2"));
 end
 //if K, stanPlyn=Nie then cel | dolej plyn
 rule "Kierownica Cel Dolej plyn"
@@ -323,7 +323,7 @@ rule "Biegi cel sprezyna powrotu"
         Fact(fact == "Biegi_A");
         Fact(fact == "halas_lozysko");
     then
-        insert(new Fact("cel_wymien sprezyne"));
+        insert(new Fact("cel_wymien_sprezyne"));
 end	
 	
 rule "Biegi_E"

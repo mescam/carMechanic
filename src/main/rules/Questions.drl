@@ -181,7 +181,7 @@ end
 
 rule "Cel Wymien pompe kier"
 	when
-		Fact(fact == "cel_wymien_pompe")
+		Fact(fact == "cel_wymien_pompe_2")
 	then
 		String a = "Należy wymienić pompę wspomagania układu kierowniczego.\n" +
 		"Pompa jest głównym elementem układu wspomagania, który zmniejsza opór z jakim obraca się kierownica.\n" +
@@ -195,7 +195,7 @@ rule "Cel obudowa kolumny"
 	then
 		String a = "Należy sprawdzić obudowę kolumny kierowniczej\n" +
 		"Obudowa kolumny znajduje się wewnątrz pojazdu, przez nią łączona jest kierownica z układem kierowania\n" +
-		"Prawdopodobna usterka obudowy skutkuje problemami z układem kierowniczym";
+		"Utrudnienie kierowania spowodowane jest przemieszczeniem obudowy kolumny kierowniczej, która ociera się o kierownicę.";
 		new Answer(a);
 end
 
@@ -214,7 +214,7 @@ rule "Cel wymien przekladnie"
 	when
 		Fact(fact == "cel_wymien_przekladnie")
 	then
-		String a = "Należy wymienić przekładnie kierowniczą\n" +
+		String a = "Należy wymienić lub zregenerować przekładnie kierowniczą\n" +
 		"Przekładnia kierownicza służy do przełożenia siły rąk na siłę osiową skręcającą kołami\n" +
 		"Poruszanie się z niesprawną przekładnią jest bardzo niebezpieczne!";
 		new Answer(a);
@@ -235,10 +235,95 @@ rule "Cel przytwierdz przewod elastyczny"
 		Fact(fact == "cel_przytwierdz_przewod_elastyczny")
 	then
 		String a = "Należy przytwierdzić przewód elastyczny\n" +
-		"Przewód elastyczny łączy\n" +
-		"Prawdopodobna usterka skutkuje problemami z układem kierowniczym";
+		"Przewód elastyczny znajduje się w układzie hamulcowym\n" +
+		"Brzęczenia wskazuje na obijanie się przewodu wlastycznego o inne elementy. Sugerujemy przymocowanie przewodu.";
 		new Answer(a);
 end
+
+rule "Cel wymien przewod elastyczny"
+	when
+		Fact(fact == "cel_wymien_przewod_elastyczny")
+	then
+		String a = "Należy wymienić przewód elastyczny\n" +
+		"Syczenie wskazuje na nieszczelność przewodu elastycznego.\n" +
+		"Poruszanie się z nieszczelnym układem hamulcowym jest bardzo niebezpieczne i może skutkować brakiem hamulców.";
+		new Answer(a);
+end
+
+rule "Cel ustaw zbieznosc"
+	when
+		Fact(fact == "cel_ustaw_zbieznosc")
+	then
+		String a = "Należy ustawić zbieżność kół\n" +
+		"Problemy z kierowaniem nie są związane z mechaniką, lecz z brakiem wyważenia kół.\n";
+		new Answer(a);
+end
+
+rule "Cel wymien pompe"
+	when
+		Fact(fact == "cel_wymien_pompe")
+	then
+		String a = "Należy wymienić pompę wspomagania układu kierowniczego\n" +
+		"Problemy z kierowanie, ciężki powrót oraz szarpanie wskazuje na problemu z pompą wspomagania. Należy ją wymienić na nowy egzemplarz.\n";
+		new Answer(a);
+end
+
+rule "Cel wymien wal"
+	when
+		Fact(fact == "cel_wymien_wal")
+	then
+		String a = "Hałas sugeruje uszkodzenie elementów wału pośredniego. Należy wymienić cały wał pośredni.";
+		new Answer(a);
+end
+
+rule "Cel odpowietrz pompe"
+	when
+		Fact(fact == "cel_odpowietrz_pompe")
+	then
+		String a = "Występowanie luzu oraz szarpnięć i wibracji wskazuje na zapowietrzenie pompy wspomagania.\nOdpowietrzenie rozwiąże problemy.";
+		new Answer(a);
+end
+
+rule "Cel wymien poprzeczne"
+	when
+		Fact(fact == "cel_wymien_poprzeczne")
+	then
+		String a = "Luzy i zły stan drążków poprzecznych klasyfikuje je do wymiany.";
+		new Answer(a);
+end
+
+rule "Cel dokrec poprzeczne"
+	when
+		Fact(fact == "cel_dokrec_poprzeczne")
+	then
+		String a = "Luzy oraz hałasy spowodowane są złym montażem drążkó poprzecznych.\nNależy je wymontować, jeszcze raz sprawdzić stan i zamontować ponownie we właściwy sposób.";
+		new Answer(a);
+end
+
+rule "Cel docisnij wal"
+	when
+		Fact(fact == "cel_docisnij_wal")
+	then
+		String a = "Hałas sugeruje problem z połaczeniem wału pośredniego. Mocne dociśnięcie elementu powinno rozwiązać problemy";
+		new Answer(a);
+end
+
+rule "Cel lozyska"
+	when
+		Fact(fact == "cel_lozyska")
+	then
+		String a = "Problem z powrotem do pozycji centralnej oraz odczuwalny luz jest spowodowany zużyciem łożysk kół. Zalecana jest wymiana.";
+		new Answer(a);
+end
+
+rule "Cel zbieznosc"
+	when
+		Fact(fact == "cel_zbieznosc")
+	then
+		String a = "Problemy z kierowaniem nie są związane z mechaniką, lecz z brakiem wyważenia kół.";
+		new Answer(a);
+end
+
 /***
 biegi
 ***/
@@ -446,4 +531,159 @@ rule "Czy kola wywazone"
         	insert(m);
 end	
 
-//Reguly
+//Odpowiedzi
+rule "Cel wymien_sprezyne"
+	when
+		Fact(fact == "cel_wymien_sprezyne");
+	then
+		new Answer("Hałas łożyska spowodowany jest osłabioną sprężyną powrotu, którą należy wymienić.");
+end
+
+rule "Cel wymiana_tarcza"
+	when
+		Fact(fact == "cel_wymiana_tarcza");
+	then
+		new Answer("Klekoczący hałas wraz z szarapaniem wskazuję na usterki elementów tarczy sprzęgła lub koła zamachowego. Wyciek oleju wskazuję na tarczę sprzęgła. Należy ją wymienić.");
+end
+
+rule "Cel wymiana_zamachowe"
+	when
+		Fact(fact == "cel_wymiana_zamachowe");
+	then
+		new Answer("Klekoczący hałas wraz z szarapaniem wskazuję na usterki elementów tarczy sprzęgła lub koła zamachowego. Brak wycieku oleju wskazuję na koło zamachowe. Należy ją wymienić.");
+end
+
+rule "Cel ochlodzenie_okladzin"
+	when
+		Fact(fact == "cel_ochlodzenie_okladzin");
+	then
+		new Answer("Przegrzanie okładzin tarczy sprzęgła może powodować poślizg sprzęgła oraz słyszalny klekot. Rozwiązaniem jest odczekanie, aż okładziny się schłodzą. Kierowca powinnien zmienić nawyki jazdy.");
+end
+
+rule "Cel wymiana_dociskowy"
+	when
+		Fact(fact == "cel_wymiana_dociskowy");
+	then
+		new Answer("Odkształcony pierścień nie nadaję się do dalszego użytku ani nawet do naprawy. Musi zostać wymieniony.");
+end
+
+rule "Cel wymiana_tarcza_2"
+	when
+		Fact(fact == "cel_wymiana_tarcza_2");
+	then
+		new Answer("Poślizg sprzęgła, klekotanie oraz dobry pierścień dociskowy wskazują na uszkodzoną tarczę sprzęgła. Należy wymienić element.");
+end
+
+rule "Cel wymiana_zamachowe_2"
+	when
+		Fact(fact == "cel_wymiana_zamachowe_2");
+	then
+		new Answer("Występowanie poślizgu oraz szarpania sugeruję odkształcenie koła zamachowego. Część powinna zostać wymieniona na nową.");
+end
+
+rule "Cel wymiana_walek"
+	when
+		Fact(fact == "cel_wymiana_walek");
+	then
+		new Answer("Doszło do zużycia wielowypustów wałka napędowego. Należy wymięnić cały wałek napędowy.");
+end
+
+rule "Cel nasmarować_walek"
+	when
+		Fact(fact == "cel_nasmarować_walek");
+	then
+		new Answer("Szarpanie oraz niepełnie wyłączanie sprzęgła spowodowane jest brakiem lub slabym nasmarowaniem wałka widełek. Element należy wymontować nasmarować i ponowanie zamontować.");
+end
+
+rule "Cel przesmaruj_sterowanie"
+	when
+		Fact(fact == "cel_przesmaruj_sterowanie");
+	then
+		new Answer("Wciśnięcie sprzęgła wymaga nadmiernej siły, jeżeli układ sterowania zakleszczył się. W tej sytuacji należy przesmatować i wyluzować układ.");
+end
+
+rule "Cel wymien_zebate"
+	when
+		Fact(fact == "cel_wymien_zebate");
+	then
+		new Answer("Wystarczy wymienić zużyte koła zębate, aby pozbyć się hałasu.");
+end
+
+rule "Cel wymien_wyciskowe"
+	when
+		Fact(fact == "cel_wymien_wyciskowe");
+	then
+		new Answer("Jeżeli koła zębate są w dobrym stanie, hałas na biegu neutralnym spowodowany jest przez zmęczone łożysko wyciskowe sprzęgła.");
+end
+
+rule "Cel wymien_synchro"
+	when
+		Fact(fact == "cel_wymien_synchro");
+	then
+		new Answer("Hałas na wstecznym biegu spowodowany był zużytym synchronizatorem biegu 1-ego i 2-ego.");
+end
+
+rule "Cel wymien_talerzowe"
+	when
+		Fact(fact == "cel_wymien_talerzowe");
+	then
+		new Answer("Hałas na wstecznym biegu spowodowany był przez zużyte koło talerzowe.");
+end
+
+rule "Cel wymien_lozyska"
+	when
+		Fact(fact == "cel_wymien_lozyska");
+	then
+		new Answer("Jeśli hałas występował tylko na określonym biegu należy wymienić łozysko danego biegu. W innym wypadku zaleca się wymiane wszystkich łożysk biegów.");
+end
+
+rule "Cel dolej_olej"
+	when
+		Fact(fact == "cel_dolej_olej");
+	then
+		new Answer("Należy uzupełnić olej do odpowiedniego poziomu. Jazda z mniejszą ilością oleju niż podaje producent może powodować wiele kosztownych uszkodzeń zespołu silnika i skrzyni biegów.");
+end
+
+rule "Cel wymiana_wlaczania_biegow"
+	when
+		Fact(fact == "cel_wymiana_wlaczania_biegow");
+	then
+		new Answer("Problem spowodowany jest usterkami widełek włączania biegu. Widełki te można naprawić lub wymienić na nowe w zależności od zużycia.");
+end
+
+rule "Cel wymien_tuleje"
+	when
+		Fact(fact == "cel_wymien_tuleje");
+	then
+		new Answer("Wyciek oleju do sprzęgła spowodowany jest nieszczelnością tuleji prowadzącej łozyska wyciskowego. Element należy wymienić na nową.");
+end
+
+rule "Cel napraw_obudowe"
+	when
+		Fact(fact == "cel_napraw_obudowe");
+	then
+		new Answer("Należy zlokalizować dokładne miejsce wycieku w środkowej części skrzyni biegów. Uszkodzena obudowę można naprawić.");
+end
+
+rule "Cel wymien_przegub"
+	when
+		Fact(fact == "cel_wymien_przegub");
+	then
+		new Answer("Występowanie problemy skrzyni biegów bez wcześniej wymienionych objawów wskazuje na zużycie przegubów półosi. Należy wymienić element.");
+end
+
+rule "Cel wymien_napedowe"
+	when
+		Fact(fact == "cel_wymien_napedowe");
+	then
+		new Answer("Wibracje przy wyważonych kołach spowodowane są przez zgiętą półoś napędową. Wymien element");
+end
+
+rule "Cel wywaz_kola"
+	when
+		Fact(fact == "cel_wywaz_kola");
+	then
+		new Answer("Wibracje spowodowane są brakiem wyważenia kół. Należy je wyważyć.");
+end
+
+
