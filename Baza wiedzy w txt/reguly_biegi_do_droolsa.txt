@@ -15,7 +15,7 @@
         	insert(m2);
 end
 
-rule "Rodzaj halasu sprzegla"
+rule "Typ halasu sprzegla"
 	when
 			Fact(fact == "Biegi_A");
 	then
@@ -37,7 +37,7 @@ rule "Szarpanie lub poslizg sprzegla"
         	insert(m);
 end	
 	
-rule "Wyciek oleju 1"
+rule "Czy wyciek oleju 1"
 	when
 			Fact(fact == "Biegi_F");
 	then
@@ -48,7 +48,7 @@ rule "Wyciek oleju 1"
         	insert(m);
 end	
 
-rule "Przegrzanie okladzin tarczy sprzegla"
+rule "Czy przegrzanie okladzin tarczy sprzegla"
 	when
 			Fact(fact == "Biegi_E");
 	then
@@ -59,7 +59,7 @@ rule "Przegrzanie okladzin tarczy sprzegla"
         	insert(m);
 end	
 
-rule "Pierscien dociskowy odksztalcony"
+rule "Czy pierscien dociskowy odksztalcony"
 	when
 			Fact(fact == "Biegi_E1");
 	then
@@ -70,7 +70,7 @@ rule "Pierscien dociskowy odksztalcony"
         	insert(m);
 end	
 
-rule "Szarpanie sprzeglo"
+rule "Czy szarpanie sprzeglo"
 	when
 			Fact(fact == "Biegi_B");
 	then
@@ -78,6 +78,138 @@ rule "Szarpanie sprzeglo"
 			String[] facts = {"szarpanie_sprzeglo", "nie_szarpanie_sprzeglo"};
 			Fact m = (new Question("Czy wyczuwasz szarpaniem gdy dusisz sprzęgło?", answers, facts)).ask();
 			if(m != null)
+        	insert(m);
+end	
+
+rule "Poslizg sprzeglo"
+	when
+			Fact(fact == "Biegi_B1");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"poslizg_sprzeglo", "nie_poslizg_sprzeglo"};
+			Fact m = (new Question("Czy wyczuwasz poślizg sprzęgła?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Niepelna czy nadmierna"
+	when
+			Fact(fact == "Biegi_B2");
+	then
+			String[] answers = {"Niepełne wyłączanie", "Nadmierna siła"};
+			String[] facts = {"niepelne", "nadmierna"};
+			Fact m = (new Question("Czy dochodzi do niepełnego wyłączania sprzęgła czy może potrzebna jest nadmierna siła, aby wciśnąć do końca sprzęgło?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Na jakim biegu?"
+	when
+			Fact(fact == "Biegi_C");
+	then
+			String[] answers = {"Na luzie", "Na wstecznym", "Na każdym biegu"};
+			String[] facts = {"biegi_neutralny", "biegi_wsteczny", "biegi_wszystkie"};
+			Fact m = (new Question("Na jakim rodzaju biegu dochodzi do problemu?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy kola zebate zuzyte"
+	when
+			Fact(fact == "Biegi_C1");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"zebate_zuzyte", "nie_zebate_zuzyte"};
+			Fact m = (new Question("Czy jakiekolwiek koło zębate jest zużyte?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy synchronizatoe zuzyty"
+	when
+			Fact(fact == "Biegi_C2");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"synchro_zuzyte", "nie_synchro_zuzyte"};
+			Fact m = (new Question("Czy widzisz ślady zużycia synchronizatora 1 i 2 biegu?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy poziom olej"
+	when
+			Fact(fact == "Biegi_C3");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"poziom_olej_biegi", "nie_poziom_olej_biegi"};
+			Fact m = (new Question("Czy poziom oleju jest prawidłowy?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy samoczynne wylaczenie"
+	when
+			Fact(fact == "Biegi_D");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"samoczynne", "nie_samoczynne"};
+			Fact m = (new Question("Czy biegi samoczynnie się wyłączają?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy samoczynne wylaczenie"
+	when
+			Fact(fact == "Biegi_D");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"samoczynne", "nie_samoczynne"};
+			Fact m = (new Question("Czy biegi samoczynnie się wyłączają?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Czy wyciek oleju 2"
+	when
+			Fact(fact == "Biegi_D1");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"wyciek_oleju_biegi", "nie_wyciek_oleju_biegi"};
+        Fact m = (new Question("Czy zauważyłeś może wyciek oleju?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end	
+
+rule "Gdzie wyciek oleju"
+	when
+			Fact(fact == "Biegi_G");
+	then
+		String[] answers = {"Sprzęgło", "Skrzynia"};
+        String[] facts = {"wyciek_oleju_sprzeglo", "wyciek_skrzynia"};
+        Fact m = (new Question("Czy wyciek oleju idzie do sprzęgła czy wyciek jest w środkowej części skrzyni biegów?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end	
+
+rule "Czy wibracje biegi"
+	when
+			Fact(fact == "Biegi_H");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"wibracje_biegi", "nie_wibracje_biegi"};
+        Fact m = (new Question("Czy wyczuwasz wibracje?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end	
+
+rule "Czy kola wywazone"
+	when
+			Fact(fact == "Biegi_I");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"wywazone", "nie_wywazone"};
+        Fact m = (new Question("Czy koła zostały wyważone ostatnio?", answers, facts)).ask();
+        if(m != null)
         	insert(m);
 end	
 
@@ -122,14 +254,13 @@ rule "Sprzeglo klekotanie"
 		insert(new Fact("Biegi_A1"));
 end
 	
-rule "Wymiana sprezyna powrotu"
+rule "Biegi cel sprezyna powrotu"
     //include attributes such as "salience" here...
     when
         Fact(fact == "Biegi_A");
         Fact(fact == "halas_lozysko");
     then
-        System.out.println("Problemem jest osłabiona sprężyna powrotu, którą należy wymienić");
-
+        insert(new Fact("cel_wymien sprezyne"));
 end	
 	
 rule "Sprzeglo poslizg"
@@ -148,26 +279,26 @@ rule "Sprzeglo szarpanie"
 		insert(new Fact("Biegi_F"));
 end
 
-rule "Wymiana tarcza sprzegla"
+rule "Biegi cel tarcza sprzegla"
     //include attributes such as "salience" here...
     when
         Fact(fact == "Biegi_F");
         Fact(fact == "wyciek_oleju_sprzeglo");
     then
-        System.out.println("Tarcza sprzęgła przepuszcza olej. Należy ją wymienić");
-
+        insert(new Fact("cel_wymiana_tarcza"));
+		
 end	
 
-rule "Wymiana kolo zamachowe"
+rule "Biegi cel kolo zamachowe"
     //include attributes such as "salience" here...
     when
         Fact(fact == "Biegi_F");
         Fact(fact == "nie_wyciek_oleju_sprzeglo");
     then
-        System.out.println("Klekotanie oraz szarpanie wskazuje na usterkę koła zamachowego. Należy je wymienić");
+		insert(new Fact("cel_wymiana_zamachowe"));
 end	
 
-rule "Do pierscienia docisku"
+rule "Biegi_E1"
 	when
         Fact(fact == "Biegi_E");
         Fact(fact == "nie_przegrzanie");
@@ -175,32 +306,249 @@ rule "Do pierscienia docisku"
 		insert(new Fact("Biegi_E1"));
 end
 
-rule "Przegrzanie okladzin"
+rule "Biegi cel przegrzanie okladzin"
     //include attributes such as "salience" here...
     when
         Fact(fact == "Biegi_E");
         Fact(fact == "przegrzanie");
     then
-        System.out.println("Problemy wynikają z przegrzanych okładzin. Należy odczekać do ostudzenia. Kierowca powinien zmienić nawyki jazdy.");
+		insert(new Fact("cel_ochlodzenie_okladzin"));
 end	
 
-rule "Wymiana pierscien dociskowy"
+rule "Biegi cel pierscien dociskowy"
     //include attributes such as "salience" here...
     when
         Fact(fact == "Biegi_E1");
         Fact(fact == "pierscien_odksztalcony");
     then
-        System.out.println("Winny jest pierścień dociskowy. Część nadaje się do wymiany.");
-
+        Fact(new Fact == ("cel_wymiana_dociskowy"));
 end	
 
-rule "Wymiana tarcza sprzegla 2"
+rule "Biegi cel tarcza sprzegla 2"
     //include attributes such as "salience" here...
     when
         Fact(fact == "Biegi_E1");
         Fact(fact == "nie_pierscien_odksztalcony");
     then
-        System.out.println("Szarpanie oraz klekot spowodowany jest usterką lub zużyciem tarczy sprzęgła");
+        Fact(new Fact == ("cel_wymiana_tarcza_2"));
 end	
 
+rule "Biegi_B1"
+	when
+        Fact(fact == "Biegi_B");
+        Fact(fact == "poslizg_sprzeglo");
+    then
+        Fact(new Fact == ("Biegi_B1"));
+end	
+
+rule "Biegi_B2"
+	when
+        Fact(fact == "Biegi_B");
+        Fact(fact == "nie_poslizg_sprzeglo");
+    then
+        Fact(new Fact == ("Biegi_B2"));
+end	
+
+rule "Biegi cel kolo zamachowe 2"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_B1");
+        Fact(fact == "poslizg_sprzeglo");
+    then
+        Fact(new Fact == ("cel_wymiana_zamachowe_2"));
+end	
+
+rule "Biegi cel walek napedowy"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_B1");
+        Fact(fact == "nie_poslizg_sprzeglo");
+    then
+        Fact(new Fact == ("cel_wymiana_walek"));
+end	
+
+rule "Biegi cel walek widelek"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_B2");
+        Fact(fact == "niepelne");
+    then
+        Fact(new Fact == ("cel_nasmarowac_walek"));
+end	
+
+rule "Biegi cel uklad sterowania"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_B2");
+        Fact(fact == "nadmierna");
+    then
+        Fact(new Fact == ("cel_przesmaruj_sterowanie"));
+end	
+
+rule "Biegi_C1"
+	when
+        Fact(fact == "Biegi_C");
+        Fact(fact == "biegi_neutralny");
+    then
+        Fact(new Fact == ("Biegi_C1"));
+end	
+
+rule "Biegi_C2"
+	when
+        Fact(fact == "Biegi_C");
+        Fact(fact == "biegi_wsteczny");
+    then
+        Fact(new Fact == ("Biegi_C2"));
+end	
+
+rule "Biegi_C3"
+	when
+        Fact(fact == "Biegi_C");
+        Fact(fact == "biegi_wszystkie");
+    then
+        Fact(new Fact == ("Biegi_C3"));
+end	
+
+rule "Biegi cel kola zebate"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_C1");
+        Fact(fact == "zebate_zuzyte");
+    then
+        Fact(new Fact == ("cel_wymien_zebate"));
+end
+	
+rule "Biegi cel lozysko wyciskowe"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_C1");
+        Fact(fact == "nie_zebate_zuzyte");
+    then
+        Fact(new Fact == ("cel_wymien_wyciskowe"));
+end	
+
+rule "Biegi cel synchronizator"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_C2");
+        Fact(fact == "synchro_zuzyte");
+    then
+        Fact(new Fact == ("cel_wymien_synchro"));
+end	
+
+rule "Biegi cel kolo talerzowe"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_C2");
+        Fact(fact == "nie_synchro_zuzyte");
+    then
+        Fact(new Fact == ("cel_wymien_talerzowe"));
+end	
+
+rule "Biegi cel lozyska"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_C3");
+        Fact(fact == "poziom_olej_biegi");
+    then
+        Fact(new Fact == ("cel_wymien_lozyska"));
+end	
+
+rule "Biegi cel dolej olej"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_C3");
+        Fact(fact == "nie_poziom_olej_biegi");
+    then
+        Fact(new Fact == ("cel_dolej_olej"));
+end	
+
+rule "Biegi cel widelki wlaczania"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_D");
+        Fact(fact == "samoczynne");
+    then
+        Fact(new Fact == ("cel_wymiana_wlaczania_biegow"));
+end	
+
+rule "Biegi_D1"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_D");
+        Fact(fact == "nie_samoczynne");
+    then
+        Fact(new Fact == ("Biegi_D1"));
+end
+
+rule "Biegi_G"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_D1");
+        Fact(fact == "poziom_oleju_biegi");
+    then
+        Fact(new Fact == ("Biegi_G"));
+end		
+
+rule "Biegi_H"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_D1");
+        Fact(fact == "nie_poziom_oleju_biegi");
+    then
+        Fact(new Fact == ("Biegi_H"));
+end	
+
+rule "Biegi cel tuleja"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_G");
+        Fact(fact == "wyciek_olej_sprzeglo");
+    then
+        Fact(new Fact == ("cel_wymien_tuleje"));
+end	
+
+rule "Biegi cel obudowa skrzyni"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_G");
+        Fact(fact == "wyciek_skrzynia");
+    then
+        Fact(new Fact == ("cel_napraw_obudowe"));
+end	
+
+rule "Biegi_I"
+	when
+		Fact(fact == "Biegi_H");
+		Fact(fact == "wibracje_biegi");
+	then 
+		Fact(new Fact == ("Biegi_I"));
+end
+
+rule "Biegi cel przegub polosie"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_H");
+        Fact(fact == "nie_wibracje_biegi");
+    then
+        Fact(new Fact == ("cel_wymien_przegub"));
+end	
+
+rule "Biegi cel polosie napedowe"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_I");
+        Fact(fact == "wywazone");
+    then
+        Fact(new Fact == ("cel_wymien_napedowe"));
+end	
+
+rule "Biegi cel wywaz"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_I");
+        Fact(fact == "nie_wywazone");
+    then
+        Fact(new Fact == ("cel_wywaz_kola"));
+end	
 
