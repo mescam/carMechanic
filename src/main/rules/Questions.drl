@@ -46,7 +46,40 @@ rule "Czy luz w kierownicy"
 	then
 		String[] answers = {"Tak", "Nie"};
         String[] facts = {"luz", "nie_luz"};
-        Fact m = (new Question("Czy występuje luz podczas\nkręcenia kierownicą?", answers, facts)).ask();
+        Fact m = (new Question("Czy występuje luz podczas kręcenia kierownicą?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+
+rule "Czy hałas v1"
+	when
+		Fact(fact == "Kierownica_B");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"halas1", "nie_halas1"};
+        Fact m = (new Question("Czy występuje hałas?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+
+rule "Typ halas 1"
+	when
+		Fact(fact == "Kierownica_C");
+	then
+		String[] answers = {"Syczący", "Brzęczący"};
+        String[] facts = {"halas1_syczy", "halas1_brzeczy"};
+        Fact m = (new Question("Hałas jest syczący czy brzęcząćy?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+
+rule "Wibracje i szarpanie"
+	when
+		Fact(fact == "Kierownica_D");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"wibracje_szarpanie", "nie_wibracje_szarpanie"};
+        Fact m = (new Question("Czy występują wibracje i szarpanie?", answers, facts)).ask();
         if(m != null)
         	insert(m);
 end
@@ -79,8 +112,142 @@ rule "Kierownica_F"
 		insert(new Fact("Kierownica_F"));
 end
 
+rule "Kierownica_B"
+	when
+		Fact(fact == "luz");
+		Fact(fact == "Kierownica_A");
+	then
+		insert(new Fact("Kierownica_B"));
+end
 
+// if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Nie then G
+rule "Kierownica_G"
+	when
+		Fact(fact == "nie_luz");
+		Fact(fact == "nie_ciezki_powrot");
+		Fact(fact == "nie_utrudnione_kierowanie");
+	then
+		insert(new Fact("Kierownica_G"));
+end
 
+rule "Kierownica_Cel_Zbieznosc"
+	when
+		Fact(fact == "nie_luz");
+		Fact(fact == "ciezki_powrot");
+		Fact(fact == "nie_utrudnione_kierowanie");
+	then
+		insert(new Fact("cel_zbieznosc"));
+end
+
+//if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Tak, halas1=Tak then C
+rule "Kierownica_C"
+	when
+		Fact(fact == "luz");
+		Fact(fact == "nie_ciezki_powrot");
+		Fact(fact == "nie_utrudnione_kierowanie");
+		Fact(fact == "halas1");
+	then
+		insert(new Fact("Kierownica_C"));
+end
+
+//if utrudnienieKierowanie=Nie, ciezkiPowrot=Nie, luz=Tak, halas1=Nie then D
+rule "Kierownica_D"
+	when
+		Fact(fact == "nie_utrudnione_kierowanie");
+		Fact(fact == "nie_ciezki_powrot");
+		Fact(fact == "nie_luz");
+		Fact(fact == "nie_halas1");
+	then
+		insert(new Fact("Kierownica_D"));
+end
+
+// if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Tak, halas1=Nie then cel |wymien lozyska kol
+rule "Kierownica Cel Lozyska"
+	when
+		Fact(fact == "nie_utrudnione_kierowanie");
+		Fact(fact == "ciezki_powrot");
+		Fact(fact == "luz");
+		Fact(fact == "nie_halas1");
+	then
+		insert(new Fact("cel_lozyska"));
+end
+
+// if utrudnienieKierowanie=Nie, ciezkiPowrot=Tak, luz=Tak, halas1=Tak then E
+rule "Kierownica_E"
+	when
+		Fact(fact == "nie_utrudnione_kierowanie");
+		Fact(fact == "ciezki_powrot");
+		Fact(fact == "luz");
+		Fact(fact == "halas1");
+	then
+		insert(new Fact("Kierownica_E"));
+end
+
+//if C, typHalas1=Syczacy than cel | docisnij wal posredni
+rule "Kierownica Cel Wal1"
+	when
+		Fact(fact == "Kierownica_C");
+		Fact(fact == "halas1_syczy");
+	then
+		insert(new Fact("cel_docisnij_wal"));
+end
+//If C, typHalas1=Brzeczy than cel | wymien wal posredni
+rule "Kierownica Cel Wal2"
+	when
+		Fact(fact == "Kierownica_C");
+		Fact(fact == "halas1_brzeczy");
+	then
+		insert(new Fact("cel_wymien_wal"));
+end
+//if E, stanPoprzeczne=Dobry then cel | dokrec drazki poprzeczne
+rule "Kierownica Cel Drazki1"
+	when
+		Fact(fact == "Kierownica_E");
+		Fact(fact == "poprzeczne_dobry");
+	then
+		insert(new Fact("cel_dokrec_poprzeczne"));
+end
+//if E, stanPoprzeczne=Zly then cel | wymien drazko poprzeczne
+rule "Kierownica Cel Drazki2"
+	when
+		Fact(fact == "Kierownica_E");
+		Fact(fact == "poprzeczne_zly");
+	then
+		insert(new Fact("cel_wymien_poprzeczne"));
+end
+
+//if D, szarpanieWibracje=Tak then cel | odpowietrz pompe
+rule "Kierownica Cel Odpowietrz"
+	when
+		Fact(fact == "Kierownica_D");
+		Fact(fact == "wibracje_szarpanie");
+	then
+		insert(new Fact("cel_odpowietrz_pompe"));
+end
+//if D, szarpanieWibracje=Nie then cel | wymien przekladnie
+rule "Kierownica Cel Wymien Przekladnie"
+	when
+		Fact(fact == "Kierownica_D");
+		Fact(fact == "nie_wibracje_szarpanie");
+	then
+		insert(new Fact("cel_wymien_przekladnie"));
+end
+//if F, halasSzarpanie=Halas then cel | wymien wal posredni
+rule "Kierownica Cel Wymien Wal"
+	when
+		Fact(fact == "Kierownica_F");
+		Fact(fact == "halas2");
+	then
+		insert(new Fact("cel_wymien_wal"));
+end
+//if F, halasSzarpanie=Szarpanie then cel | wymien pompe
+rule "Kierownica Cel Wymien pompe"
+	when
+		Fact(fact == "Kierownica_F");
+		Fact(fact == "szarpanie");
+	then
+		insert(new Fact("cel_wymien_pompe"));
+end
 
 rule "Problem z biegami"
     //include attributes such as "salience" here...
