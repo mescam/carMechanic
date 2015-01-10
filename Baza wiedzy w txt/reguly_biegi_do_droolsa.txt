@@ -1,0 +1,206 @@
+﻿rule "Problem z biegami"
+
+	when
+		Fact(fact == "problem_biegi");
+    then
+        String[] answers = {"Tak", "Nie"};
+        String[] facts = {"problem_sprzeglo", "nie_problem_sprzeglo"};
+        Fact m = (new Question("Czy występuje problem ze sprzęgłem?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+        	
+        String[] facts2 = {"halas_biegi", "nie_halas_biegi"};
+        Fact m2 = (new Question("Czy słyszysz hałas?", answers, facts2)).ask();
+        if (m2 != null)
+        	insert(m2);
+end
+
+rule "Rodzaj halasu sprzegla"
+	when
+			Fact(fact == "Biegi_A");
+	then
+		String[] answers = {"Klekot", "Hałas z łożyska"};
+        String[] facts = {"klekot_sprzeglo", "halas_lozysko"};
+        Fact m = (new Question("Jakiego rodzaju hałas słyszysz? Klekotanie czy specyficzny hałas łożyska", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end
+	
+rule "Szarpanie lub poslizg sprzegla"
+	when
+			Fact(fact == "Biegi_A1");
+	then
+		String[] answers = {"Poślizg", "Szarpanie"};
+        String[] facts = {"poslizg_sprzeglo", "szarpanie_sprzeglo"};
+        Fact m = (new Question("Odczuwasz poślizg sprzęgła lub szarpanie?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end	
+	
+rule "Wyciek oleju 1"
+	when
+			Fact(fact == "Biegi_F");
+	then
+		String[] answers = {"Tak", "Nie"};
+        String[] facts = {"wyciek_oleju_sprzeglo", "nie_wyciek_oleju_sprzeglo"};
+        Fact m = (new Question("Czy zauważyłeś może wyciek oleju?", answers, facts)).ask();
+        if(m != null)
+        	insert(m);
+end	
+
+rule "Przegrzanie okladzin tarczy sprzegla"
+	when
+			Fact(fact == "Biegi_E");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"przegrzanie", "nie_przegrzanie"};
+			Fact m = (new Question("Czy okładziny tarczy sprzegła są przegrzane?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Pierscien dociskowy odksztalcony"
+	when
+			Fact(fact == "Biegi_E1");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"pierscien_odksztalcony", "nie_pierscien_odksztalcony"};
+			Fact m = (new Question("Czy pierścień dociskowy jest odkształcony?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+rule "Szarpanie sprzeglo"
+	when
+			Fact(fact == "Biegi_B");
+	then
+			String[] answers = {"Tak", "Nie"};
+			String[] facts = {"szarpanie_sprzeglo", "nie_szarpanie_sprzeglo"};
+			Fact m = (new Question("Czy wyczuwasz szarpaniem gdy dusisz sprzęgło?", answers, facts)).ask();
+			if(m != null)
+        	insert(m);
+end	
+
+//Reguly
+rule "Biegi_A"
+	when
+		Fact(fact == "problem_sprzeglo");
+		Fact(fact == "halas_biegi");
+	then
+		insert(new Fact("Biegi_A"));
+end
+
+rule "Biegi_B"
+	when
+		Fact(fact == "problem_sprzeglo");
+		Fact(fact == "nie_halas_biegi");
+	then
+		insert(new Fact("Biegi_B"));
+end
+
+rule "Biegi_C"
+	when
+		Fact(fact == "nie_problem_sprzeglo");
+		Fact(fact == "halas_biegi");
+	then
+		insert(new Fact("Biegi_C"));
+end
+
+rule "Biegi_D"
+	when
+		Fact(fact == "nie_problem_sprzeglo");
+		Fact(fact == "nie_halas_biegi");
+	then
+		insert(new Fact("Biegi_D"));
+end
+
+rule "Sprzeglo klekotanie"
+	when
+        Fact(fact == "Biegi_A");
+        Fact(fact == "klekot_sprzeglo");
+    then
+		insert(new Fact("Biegi_A1"));
+end
+	
+rule "Wymiana sprezyna powrotu"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_A");
+        Fact(fact == "halas_lozysko");
+    then
+        System.out.println("Problemem jest osłabiona sprężyna powrotu, którą należy wymienić");
+
+end	
+	
+rule "Sprzeglo poslizg"
+	when
+        Fact(fact == "Biegi_A1");
+        Fact(fact == "poslizg");
+    then
+		insert(new Fact("Biegi_E"));
+end
+
+rule "Sprzeglo szarpanie"
+	when
+        Fact(fact == "Biegi_A1");
+        Fact(fact == "szarpanie");
+    then
+		insert(new Fact("Biegi_F"));
+end
+
+rule "Wymiana tarcza sprzegla"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_F");
+        Fact(fact == "wyciek_oleju_sprzeglo");
+    then
+        System.out.println("Tarcza sprzęgła przepuszcza olej. Należy ją wymienić");
+
+end	
+
+rule "Wymiana kolo zamachowe"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_F");
+        Fact(fact == "nie_wyciek_oleju_sprzeglo");
+    then
+        System.out.println("Klekotanie oraz szarpanie wskazuje na usterkę koła zamachowego. Należy je wymienić");
+end	
+
+rule "Do pierscienia docisku"
+	when
+        Fact(fact == "Biegi_E");
+        Fact(fact == "nie_przegrzanie");
+    then
+		insert(new Fact("Biegi_E1"));
+end
+
+rule "Przegrzanie okladzin"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_E");
+        Fact(fact == "przegrzanie");
+    then
+        System.out.println("Problemy wynikają z przegrzanych okładzin. Należy odczekać do ostudzenia. Kierowca powinien zmienić nawyki jazdy.");
+end	
+
+rule "Wymiana pierscien dociskowy"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_E1");
+        Fact(fact == "pierscien_odksztalcony");
+    then
+        System.out.println("Winny jest pierścień dociskowy. Część nadaje się do wymiany.");
+
+end	
+
+rule "Wymiana tarcza sprzegla 2"
+    //include attributes such as "salience" here...
+    when
+        Fact(fact == "Biegi_E1");
+        Fact(fact == "nie_pierscien_odksztalcony");
+    then
+        System.out.println("Szarpanie oraz klekot spowodowany jest usterką lub zużyciem tarczy sprzęgła");
+end	
+
+
